@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Walter Flores · Catálogo Dia dos Namorados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Italiana&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-900:#081b12;
+    --green-800:#0e2a1c;
+    --green-700:#163826;
+    --green-600:#1f4a32;
+    --green-500:#2a6147;
+    --bordeaux-900:#3a070f;
+    --bordeaux-800:#5a0f1f;
+    --bordeaux-700:#7a1730;
+    --cream:#f3ead7;
+    --cream-2:#ede2c8;
+    --paper:#f7f0dd;
+    --gold:#b8935a;
+    --gold-soft:#c9a86b;
+    --ink:#1a1410;
+    --rule:rgba(184,147,90,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--cream);color:var(--ink);font-family:'Inter',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased}
+  body{overflow-x:hidden}
+  .serif{font-family:'Cormorant Garamond',serif}
+  .italiana{font-family:'Italiana',serif}
+  .smallcaps{font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.32em;font-size:11px;font-weight:400}
+  a{color:inherit;text-decoration:none}
+
+  /* ============ COVER ============ */
+  .cover{
+    position:relative;
+    min-height:100vh;
+    background:
+      radial-gradient(120% 80% at 50% 10%, rgba(184,147,90,.10), transparent 60%),
+      linear-gradient(180deg, var(--green-900) 0%, var(--green-800) 60%, var(--green-700) 100%);
+    color:var(--cream);
+    overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .cover::before{
+    content:"";position:absolute;inset:36px;border:1px solid var(--rule);pointer-events:none;
+  }
+  .cover::after{
+    content:"";position:absolute;inset:44px;border:1px solid rgba(184,147,90,.18);pointer-events:none;
+  }
+  .cover-top{
+    position:relative;z-index:2;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:60px 80px 0;color:var(--cream);
+  }
+  .cover-top .smallcaps{color:var(--gold-soft)}
+  .cover-main{
+    position:relative;z-index:2;
+    flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:60px 80px;
+  }
+  .crest{
+    display:flex;flex-direction:column;align-items:center;gap:18px;margin-bottom:34px;
+  }
+  .crest .mono{
+    width:84px;height:84px;border:1px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Italiana',serif;font-size:34px;color:var(--gold-soft);
+    position:relative;
+  }
+  .crest .mono::before,.crest .mono::after{
+    content:"";position:absolute;left:50%;transform:translateX(-50%);
+    width:1px;height:14px;background:var(--gold);
+  }
+  .crest .mono::before{top:-22px}
+  .crest .mono::after{bottom:-22px}
+  .brand{
+    font-family:'Italiana',serif;font-size:88px;line-height:1;color:var(--cream);
+    letter-spacing:.02em;
+  }
+  .brand .amp{color:var(--gold-soft);font-style:italic;margin:0 .15em}
+  .tagline{
+    margin-top:22px;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:22px;color:rgba(243,234,215,.75);max-width:560px;
+  }
+
+  .ornament{display:flex;align-items:center;gap:14px;margin:42px 0 28px;color:var(--gold-soft)}
+  .ornament .line{width:120px;height:1px;background:var(--gold)}
+  .ornament .dot{width:6px;height:6px;border:1px solid var(--gold);transform:rotate(45deg)}
+
+  .edition{
+    font-family:'Cormorant Garamond',serif;font-size:32px;letter-spacing:.04em;color:var(--cream);
+  }
+  .edition em{font-style:italic;color:var(--bordeaux-700);background:linear-gradient(180deg, transparent 60%, rgba(122,23,48,.0) 0);
+    text-shadow:0 0 0 currentColor;
+  }
+  .vol{
+    margin-top:18px;display:flex;align-items:center;gap:24px;color:var(--gold-soft)
+  }
+  .vol .num{font-family:'Italiana',serif;font-size:18px;letter-spacing:.4em}
+
+  .cover-bottom{
+    position:relative;z-index:2;
+    display:flex;justify-content:space-between;align-items:flex-end;
+    padding:0 80px 60px;color:rgba(243,234,215,.7);
+  }
+  .cover-bottom .smallcaps{color:var(--gold-soft)}
+
+  /* decorative corner sprigs (subtle SVG strokes, not full illustrations) */
+  .sprig{position:absolute;color:var(--gold);opacity:.55;z-index:1}
+  .sprig.tl{top:80px;left:80px;transform:rotate(0)}
+  .sprig.tr{top:80px;right:80px;transform:scaleX(-1)}
+  .sprig.bl{bottom:80px;left:80px;transform:scaleY(-1)}
+  .sprig.br{bottom:80px;right:80px;transform:scale(-1,-1)}
+
+  /* ============ INTRO ============ */
+  .intro{
+    background:var(--cream);
+    padding:140px 80px 110px;
+    position:relative;
+  }
+  .intro-grid{
+    display:grid;grid-template-columns:1fr 1.2fr;gap:90px;align-items:start;max-width:1280px;margin:0 auto;
+  }
+  .intro-eyebrow{display:flex;align-items:center;gap:14px;color:var(--bordeaux-800)}
+  .intro-eyebrow .bar{width:42px;height:1px;background:currentColor}
+  .intro h2{
+    font-family:'Cormorant Garamond',serif;font-weight:400;font-size:64px;line-height:1.05;
+    color:var(--green-800);margin-top:22px;letter-spacing:-.01em;
+  }
+  .intro h2 em{font-style:italic;color:var(--bordeaux-800)}
+  .intro p{
+    font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.55;color:#3a322a;
+    margin-bottom:18px;
+  }
+  .intro .dropcap::first-letter{
+    font-family:'Italiana',serif;float:left;font-size:78px;line-height:.85;padding:6px 12px 0 0;color:var(--bordeaux-800);
+  }
+  .intro-meta{
+    margin-top:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px;
+    padding-top:30px;border-top:1px solid var(--rule);
+  }
+  .intro-meta .label{color:var(--green-700);font-size:10px}
+  .intro-meta .value{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);margin-top:8px}
+
+  /* ============ SECTION HEADER ============ */
+  .section-head{
+    background:var(--green-800);
+    color:var(--cream);
+    padding:90px 80px;
+    text-align:center;
+    position:relative;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  .section-head .smallcaps{color:var(--gold-soft)}
+  .section-head h3{
+    font-family:'Italiana',serif;font-size:72px;color:var(--cream);margin:18px 0 10px;letter-spacing:.02em;
+  }
+  .section-head h3 em{color:var(--bordeaux-700);font-style:italic;font-family:'Cormorant Garamond',serif}
+  .section-head .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:rgba(243,234,215,.7)}
+
+  /* ============ CATALOG GRID ============ */
+  .catalog{
+    background:var(--cream);
+    padding:120px 80px 140px;
+  }
+  .catalog-inner{max-width:1320px;margin:0 auto}
+  .grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:64px 48px;
+  }
+  .card{
+    background:var(--paper);
+    border:1px solid var(--rule);
+    padding:22px 22px 28px;
+    position:relative;
+    display:flex;flex-direction:column;
+    transition:transform .4s ease, box-shadow .4s ease;
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 30px 60px -30px rgba(14,42,28,.35);
+  }
+  .card .corner{
+    position:absolute;width:14px;height:14px;border:1px solid var(--gold);
+  }
+  .card .corner.tl{top:-1px;left:-1px;border-right:none;border-bottom:none}
+  .card .corner.tr{top:-1px;right:-1px;border-left:none;border-bottom:none}
+  .card .corner.bl{bottom:-1px;left:-1px;border-right:none;border-top:none}
+  .card .corner.br{bottom:-1px;right:-1px;border-left:none;border-top:none}
+
+  .card-img{
+    position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--green-900);
+  }
+  .card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s ease}
+  .card:hover .card-img img{transform:scale(1.04)}
+  .card-img .ribbon{
+    position:absolute;top:14px;left:14px;
+    background:var(--bordeaux-800);color:var(--cream);
+    padding:6px 12px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;
+  }
+  .card-img .code{
+    position:absolute;bottom:14px;right:14px;
+    background:rgba(8,27,18,.78);color:var(--gold-soft);
+    padding:6px 10px;font-family:'Italiana',serif;font-size:13px;letter-spacing:.18em;
+  }
+
+  .card-meta{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-top:22px;padding-bottom:14px;border-bottom:1px solid var(--rule);
+  }
+  .card-meta .roman{
+    font-family:'Italiana',serif;color:var(--gold);font-size:13px;letter-spacing:.34em;
+  }
+  .card-meta .cat{font-size:10px;color:var(--green-700);letter-spacing:.3em;text-transform:uppercase}
+
+  .card h4{
+    font-family:'Cormorant Garamond',serif;font-weight:500;font-size:30px;
+    color:var(--green-800);margin-top:14px;line-height:1.1;
+  }
+  .card h4 em{font-style:italic;color:var(--bordeaux-800);font-weight:400}
+
+  .card .desc{
+    font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.5;color:#4a4036;
+    margin-top:12px;font-style:italic;flex:1;
+    /* placeholder editable area */
+  }
+
+  .card-footer{
+    margin-top:22px;padding-top:18px;border-top:1px solid var(--rule);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .price{
+    display:flex;align-items:baseline;gap:6px;
+    font-family:'Cormorant Garamond',serif;color:var(--bordeaux-800);
+  }
+  .price .currency{font-size:14px;letter-spacing:.18em}
+  .price .value{font-size:34px;font-weight:500;letter-spacing:-.01em}
+  .price .cents{font-size:14px;align-self:flex-start;margin-top:8px}
+
+  .btn{
+    font-size:10px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--green-800);border:1px solid var(--green-800);
+    padding:10px 16px;background:transparent;cursor:pointer;
+    transition:all .25s ease;
+    font-family:'Inter',sans-serif;
+  }
+  .btn:hover{background:var(--green-800);color:var(--cream)}
+
+  /* ============ INTERSTITIAL QUOTE ============ */
+  .quote{
+    background:
+      linear-gradient(180deg, rgba(58,7,15,.92), rgba(58,7,15,.92)),
+      var(--bordeaux-900);
+    color:var(--cream);
+    padding:140px 80px;
+    text-align:center;
+    position:relative;
+  }
+  .quote::before{
+    content:"";position:absolute;inset:36px;border:1px solid rgba(184,147,90,.35);
+  }
+  .quote .mark{font-family:'Italiana',serif;font-size:120px;line-height:.5;color:var(--gold);}
+  .quote blockquote{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:42px;line-height:1.25;
+    max-width:880px;margin:30px auto 0;color:var(--cream);font-weight:300;
+  }
+  .quote cite{
+    display:block;margin-top:30px;font-style:normal;
+    font-family:'Inter',sans-serif;letter-spacing:.36em;font-size:11px;color:var(--gold-soft);text-transform:uppercase;
+  }
+
+  /* ============ FOOTER ============ */
+  footer{
+    background:var(--green-900);color:rgba(243,234,215,.75);
+    padding:80px 80px 50px;position:relative;
+  }
+  .footer-grid{
+    display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;
+    padding-bottom:50px;border-bottom:1px solid var(--rule);
+  }
+  footer h5{
+    font-family:'Italiana',serif;font-size:32px;color:var(--cream);margin-bottom:18px;
+  }
+  footer .smallcaps{color:var(--gold-soft);display:block;margin-bottom:14px}
+  footer p, footer li{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.7;color:rgba(243,234,215,.7)}
+  footer ul{list-style:none}
+  .footer-bottom{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:30px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(243,234,215,.4);
+  }
+
+  /* ============ PRINT ============ */
+  @media print {
+    @page { size: A4 landscape; margin: 0; }
+
+    *, *::before, *::after {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+      transition: none !important;
+      animation: none !important;
+    }
+    html, body { background: var(--cream); }
+    body { overflow: visible; }
+
+    /* Each top-level section sized as one A4 landscape page */
+    .cover, .section-head, .quote, footer {
+      width: 297mm;
+      height: 210mm;
+      min-height: 210mm;
+      break-before: page;
+      break-after: page;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .cover { break-before: avoid; }
+
+    /* COVER — reduce padding to fit page */
+    .cover { padding: 0 !important; display:flex; flex-direction:column; }
+    .cover::before { inset: 14mm !important; }
+    .cover::after  { inset: 16mm !important; }
+    .cover-top   { padding: 20mm 24mm 0 !important; }
+    .cover-main  { padding: 0 24mm !important; flex: 1; }
+    .cover-bottom{ padding: 0 24mm 18mm !important; }
+    .sprig.tl,.sprig.tr { top: 24mm !important; }
+    .sprig.bl,.sprig.br { bottom: 24mm !important; }
+    .sprig.tl,.sprig.bl { left: 24mm !important; }
+    .sprig.tr,.sprig.br { right: 24mm !important; }
+    .brand { font-size: 64px !important; }
+    .tagline { font-size: 18px !important; }
+    .edition { font-size: 26px !important; }
+    .ornament { margin: 28px 0 22px !important; }
+    .crest { margin-bottom: 22px !important; }
+
+    /* SECTION HEAD */
+    .section-head { padding: 0 24mm !important; display:flex; flex-direction:column; justify-content:center; }
+    .section-head h3 { font-size: 64px !important; margin: 14px 0 8px !important; }
+    .section-head .sub { font-size: 20px !important; }
+
+    /* CATALOG — paginate 6 cards per page (3 cols × 2 rows) */
+    .catalog { padding: 0 !important; background: var(--cream); }
+    .catalog-inner { max-width: none !important; margin: 0 !important; }
+    .grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 8mm !important;
+      padding: 12mm 14mm !important;
+      width: 297mm;
+      box-sizing: border-box;
+    }
+    /* Force a page break after every 6 cards */
+    .card {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      padding: 6mm !important;
+      box-shadow: none !important;
+      transform: none !important;
+      height: auto;
+    }
+    .card:nth-child(6n) { break-after: page; page-break-after: always; }
+    .card:hover { transform: none !important; box-shadow: none !important; }
+    .card:hover .card-img img { transform: none !important; }
+
+    .card-img { aspect-ratio: 1/1; }
+    .card h4 { font-size: 22px !important; }
+    .card .desc { font-size: 12px !important; line-height: 1.5 !important; }
+    .card-meta { margin-top: 10px !important; padding-bottom: 8px !important; }
+    .card-footer { margin-top: 12px !important; padding-top: 10px !important; }
+    .price .value { font-size: 26px !important; }
+    .btn { padding: 7px 12px !important; font-size: 9px !important; }
+    .card-img .code { font-size: 11px !important; padding: 4px 8px !important; }
+    .card-img .ribbon { font-size: 8px !important; padding: 4px 9px !important; }
+
+    /* QUOTE */
+    .quote { padding: 0 24mm !important; display:flex; flex-direction:column; justify-content:center; }
+    .quote::before { inset: 14mm !important; }
+    .quote blockquote { font-size: 34px !important; }
+    .quote .mark { font-size: 100px !important; }
+
+    /* FOOTER */
+    footer { padding: 24mm 24mm 18mm !important; }
+    .footer-grid { gap: 30px !important; padding-bottom: 30px !important; }
+    footer h5 { font-size: 28px !important; }
+    footer p, footer li { font-size: 13px !important; line-height: 1.65 !important; }
+    .footer-bottom { padding-top: 18px !important; font-size: 9px !important; }
+
+    /* hide any contenteditable affordance */
+    [contenteditable] { outline: none !important; }
+    button.btn { pointer-events: none; }
+  }
+
+  /* responsive */
+  @media (max-width: 1100px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .intro-grid{grid-template-columns:1fr;gap:40px}
+    .brand{font-size:64px}
+  }
+  @media (max-width: 720px){
+    .grid{grid-template-columns:1fr;gap:40px}
+    .cover-top,.cover-main,.cover-bottom,.intro,.section-head,.catalog,.quote,footer{padding-left:24px;padding-right:24px}
+    .cover::before,.cover::after{inset:14px}
+    .brand{font-size:46px}
+    .intro h2{font-size:40px}
+    .section-head h3{font-size:46px}
+    .quote blockquote{font-size:26px}
+    .footer-grid{grid-template-columns:1fr;gap:30px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover" data-screen-label="01 Capa">
+
+  <!-- decorative botanical corners -->
+  <svg class="sprig tl" width="140" height="120" viewBox="0 0 140 120" fill="none">
+    <path d="M2 2 C 30 18, 60 30, 90 28" stroke="currentColor" stroke-width="0.8"/>
+    <path d="M30 14 C 26 6, 22 4, 16 6" stroke="currentColor" stroke-width="0.6"/>
+    <path d="M55 24 C 52 16, 48 14, 42 16" stroke="currentColor" stroke-width="0.6"/>
+    <path d="M82 28 C 80 20, 76 18, 70 20" stroke="currentColor" stroke-width="0.6"/>
+    <circle cx="90" cy="28" r="3" fill="currentColor"/>
+  </svg>
+  <svg class="sprig tr" width="140" height="120" viewBox="0 0 140 120" fill="none">
+    <path d="M2 2 C 30 18, 60 30, 90 28" stroke="currentColor" stroke-width="0.8"/>
+    <path d="M30 14 C 26 6, 22 4, 16 6" stroke="currentColor" stroke-width="0.6"/>
+    <path d="M55 24 C 52 16, 48 14, 42 16" stroke="currentColor" stroke-width="0.6"/>
+    <path d="M82 28 C 80 20, 76 18, 70 20" stroke="currentColor" stroke-width="0.6"/>
+    <circle cx="90" cy="28" r="3" fill="currentColor"/>
+  </svg>
+  <svg class="sprig bl" width="140" height="120" viewBox="0 0 140 120" fill="none">
+    <path d="M2 2 C 30 18, 60 30, 90 28" stroke="currentColor" stroke-width="0.8"/>
+    <path d="M30 14 C 26 6, 22 4, 16 6" stroke="currentColor" stroke-width="0.6"/>
+    <path d="M55 24 C 52 16, 48 14, 42 16" stroke="currentColor" stroke-width="0.6"/>
+    <path d="M82 28 C 80 20, 76 18, 70 20" stroke="currentColor" stroke-width="0.6"/>
+    <circle cx="90" cy="28" r="3" fill="currentColor"/>
+  </svg>
+  <svg class="sprig br" width="140" height="120" viewBox="0 0 140 120" fill="none">
+    <path d="M2 2 C 30 18, 60 30, 90 28" stroke="currentColor" stroke-width="0.8"/>
+    <path d="M30 14 C 26 6, 22 4, 16 6" stroke="currentColor" stroke-width="0.6"/>
+    <path d="M55 24 C 52 16, 48 14, 42 16" stroke="currentColor" stroke-width="0.6"/>
+    <path d="M82 28 C 80 20, 76 18, 70 20" stroke="currentColor" stroke-width="0.6"/>
+    <circle cx="90" cy="28" r="3" fill="currentColor"/>
+  </svg>
+
+  <div class="cover-top">
+    <span class="smallcaps">Maison · Est. MCMXCVIII</span>
+    <span class="smallcaps">Edição N.<span class="italiana" style="font-size:14px;letter-spacing:.2em">&nbsp;XII</span></span>
+  </div>
+
+  <div class="cover-main">
+    <div class="crest">
+      <div class="mono">W<span style="color:var(--gold);margin:0 -3px">·</span>F</div>
+      <span class="smallcaps">Floricultura de Alta Coleção</span>
+    </div>
+
+    <h1 class="brand">Walter<span class="amp">&amp;</span>Flores</h1>
+
+    <p class="tagline">A arte de revelar o amor através das flores mais nobres da estação.</p>
+
+    <div class="ornament">
+      <span class="line"></span>
+      <span class="dot"></span>
+      <span class="italiana" style="font-size:14px;letter-spacing:.4em">XII · VI · MMXXVI</span>
+      <span class="dot"></span>
+      <span class="line"></span>
+    </div>
+
+    <h2 class="edition">Catálogo do <em style="color:var(--bordeaux-700)">Dia dos Namorados</em></h2>
+    <div class="vol">
+      <span class="num">VOL. I</span>
+      <span style="font-family:'Cormorant Garamond',serif;font-style:italic">Coleção Coração de Junho</span>
+      <span class="num">MMXXVI</span>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <span class="smallcaps">R. Manuel Luis Pereira, 35 · Nilópolis · RJ</span>
+    <span class="smallcaps">walterflores.com.br</span>
+  </div>
+</section>
+
+<!-- ============ SECTION HEAD ============ -->
+<section class="section-head" data-screen-label="02 Coleção">
+  <span class="smallcaps">A Coleção · Vol. I</span>
+  <h3>Coração <em>de</em> Junho</h3>
+  <div class="sub">Treze buquês para treze maneiras de amar</div>
+</section>
+
+<!-- ============ CATALOG GRID ============ -->
+<section class="catalog" data-screen-label="03 Buquês">
+  <div class="catalog-inner">
+    <div class="grid">
+
+      <!-- CARD 1 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-rosas-vermelhas.jpg" alt="Buquê de rosas vermelhas">
+          <span class="ribbon">Mais Desejado</span>
+          <span class="code">WF · 001</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;I</span>
+          <span class="cat">Rosas Nobres</span>
+        </div>
+        <h4>Ardente <em>Bordeaux</em></h4>
+        <p class="desc" contenteditable="true">Doze rosas vermelhas grand cru envoltas em juta e organza vinho, com toques de eucalipto azul e mini áster — uma declaração clássica, intensa e atemporal. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">389</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 2 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-rosas-pink.jpg" alt="Buquê de rosas cor-de-rosa">
+          <span class="ribbon" style="background:var(--green-700)">Romântico</span>
+          <span class="code">WF · 002</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;II</span>
+          <span class="cat">Rosas &amp; Lírios</span>
+        </div>
+        <h4>Doce <em>Confissão</em></h4>
+        <p class="desc" contenteditable="true">Vinte rosas cor-de-rosa em ponto de botão, alstroemérias brancas e solidago dourado — um buquê delicado, perfeito para os primeiros gestos do amor. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">329</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 3 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-rosas-cesta.jpg" alt="Arranjo de rosas em cesta">
+          <span class="ribbon">Edição Limitada</span>
+          <span class="code">WF · 003</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;III</span>
+          <span class="cat">Arranjo em Cesta</span>
+        </div>
+        <h4>Coração <em>em Cesto</em></h4>
+        <p class="desc" contenteditable="true">Arranjo em cesta de vidro com rosas vermelhas profundas, mosquitinho branco e alstroemérias dispostas em camadas — uma peça generosa para mesa e memória. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">459</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 4 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-girassois.jpg" alt="Buquê de girassóis">
+          <span class="ribbon" style="background:var(--green-700)">Sol de Junho</span>
+          <span class="code">WF · 004</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;IV</span>
+          <span class="cat">Girassóis Premium</span>
+        </div>
+        <h4>Sol <em>Inteiro</em></h4>
+        <p class="desc" contenteditable="true">Sete girassóis de campo, solidago e mosquitinho em embalagem dourada com fita acetinada — para os amores ensolarados, leves e francos como o verão. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">279</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 5 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-jardim.jpg" alt="Buquê de flores do jardim">
+          <span class="ribbon">Autoral</span>
+          <span class="code">WF · 005</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;V</span>
+          <span class="cat">Composição Mista</span>
+        </div>
+        <h4>Jardim <em>Secreto</em></h4>
+        <p class="desc" contenteditable="true">Lisianthus, crisântemos, alstroemérias roxas e botões de rosa em uma composição assinada — uma colheita romântica, como um jardim particular para dois. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">419</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 6 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-rosas-noir.jpg" alt="Buquê de rosas vermelhas em embalagem preta">
+          <span class="ribbon">Noir</span>
+          <span class="code">WF · 006</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;VI</span>
+          <span class="cat">Rosas Couture</span>
+        </div>
+        <h4>Veludo <em>Noir</em></h4>
+        <p class="desc" contenteditable="true">Rosas vermelhas profundas e mosquitinho em embalagem preta com fita acetinada vermelha — uma silhueta couture, sofisticada e dramática para o amor moderno. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">429</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 7 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-girassois-gold.jpg" alt="Buquê de girassóis em embalagem dourada">
+          <span class="ribbon" style="background:var(--green-700)">Dourado</span>
+          <span class="code">WF · 007</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;VII</span>
+          <span class="cat">Girassóis Grand</span>
+        </div>
+        <h4>Ouro <em>de Verão</em></h4>
+        <p class="desc" contenteditable="true">Composição generosa de girassóis com solidago dourado e eucalipto, envolvida em malha dourada — luz e abundância para celebrar o amor radiante. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">349</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 8 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-azul.jpg" alt="Buquê de rosas azuis e margaridas">
+          <span class="ribbon">Edição Rara</span>
+          <span class="code">WF · 008</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;VIII</span>
+          <span class="cat">Rosas Azuis</span>
+        </div>
+        <h4>Sereno <em>Safira</em></h4>
+        <p class="desc" contenteditable="true">Rosas azuis, margaridas em tom turquesa, solidago e mosquitinho — uma composição rara e poética, para amores que escapam ao convencional. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">469</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 9 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-lirios-brancos.jpg" alt="Buquê de lírios brancos e hortênsias">
+          <span class="ribbon" style="background:var(--green-700)">Puro</span>
+          <span class="code">WF · 009</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;IX</span>
+          <span class="cat">Lírios &amp; Hortênsias</span>
+        </div>
+        <h4>Brisa <em>Branca</em></h4>
+        <p class="desc" contenteditable="true">Lírios orientais, hortênsias creme, alstroemérias maculadas e mosquitinho com fita dourada — uma elegância silenciosa e luminosa para amores serenos. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">399</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 10 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-misto-jarra.jpg" alt="Arranjo de lisianthus em jarra de vidro">
+          <span class="ribbon">Atelier</span>
+          <span class="code">WF · 010</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;X</span>
+          <span class="cat">Arranjo em Jarra</span>
+        </div>
+        <h4>Pátio <em>em Flor</em></h4>
+        <p class="desc" contenteditable="true">Lisianthus rosa, púrpura e creme com alstroemérias e eucalipto em jarra de vidro com ráfia natural — um arranjo aconchegante, perfeito para mesas de jantar a dois. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">439</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 11 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-girassois-rubi.jpg" alt="Buquê de girassóis e alstroemérias vermelhas">
+          <span class="ribbon">Coleção</span>
+          <span class="code">WF · 011</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;XI</span>
+          <span class="cat">Sol &amp; Rubi</span>
+        </div>
+        <h4>Crepúsculo <em>Rubi</em></h4>
+        <p class="desc" contenteditable="true">Girassóis acompanhados de alstroemérias rubi e mosquitinho em embalagem dourada — o contraste entre o sol e o fogo, para amores intensos e luminosos. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">379</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 12 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-festa-love.jpg" alt="Buquê colorido com gerberas e girassol">
+          <span class="ribbon" style="background:var(--bordeaux-800)">Love</span>
+          <span class="code">WF · 012</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;XII</span>
+          <span class="cat">Composição Festiva</span>
+        </div>
+        <h4>Festa <em>do Coração</em></h4>
+        <p class="desc" contenteditable="true">Gérberas rosa, mini rosas vermelhas, lisianthus, girassol e mosquitinho em embalagem rosê com fita xadrez e pingente &ldquo;Love&rdquo; — alegre, generoso e cheio de vida. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">449</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 13 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/buque-campo-sol.jpg" alt="Buquê de girassóis, rosas vermelhas e gerberas">
+          <span class="ribbon" style="background:var(--green-700)">Campo</span>
+          <span class="code">WF · 013</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;XIII</span>
+          <span class="cat">Composição Solar</span>
+        </div>
+        <h4>Tarde <em>Dourada</em></h4>
+        <p class="desc" contenteditable="true">Girassóis, rosas vermelhas, gérberas alaranjadas, solidago e eucalipto prateado em papel translúcido — uma colheita de fim de tarde, intensa e ensolarada. [descrição editável]</p>
+        <div class="card-footer">
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="value">419</span>
+            <span class="cents">,00</span>
+          </div>
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE ============ -->
+<section class="quote" data-screen-label="04 Citação">
+  <div class="mark">&ldquo;</div>
+  <blockquote>
+    Quem oferece flores, oferece tempo &mdash;<br/>
+    o tempo da espera, o tempo da escolha,<br/>
+    o tempo precioso de pensar em alguém.
+  </blockquote>
+  <cite>— Walter Flores · Maison Floral</cite>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer data-screen-label="05 Rodapé">
+  <div class="footer-grid">
+    <div>
+      <h5>Walter <span style="color:var(--gold-soft);font-style:italic">&amp;</span> Flores</h5>
+      <p>Floricultura dedicada à arte da composição floral. Cada peça é montada manualmente em nosso ateliê, com flores selecionadas no mesmo dia da entrega — para que cada presente chegue no auge de sua beleza.</p>
+    </div>
+    <div>
+      <span class="smallcaps">Endereço</span>
+      <ul>
+        <li>R. Manuel Luis Pereira, 35</li>
+        <li>Centro · Nilópolis · RJ</li>
+        <li>CEP 26520-290</li>
+      </ul>
+    </div>
+    <div>
+      <span class="smallcaps">Contato</span>
+      <ul>
+        <li>(21) 2791-7153</li>
+        <li>walterflores.com.br</li>
+      </ul>
+    </div>
+    <div>
+      <span class="smallcaps">Horário de Funcionamento</span>
+      <ul>
+        <li>Seg a Sex · 08h às 20h</li>
+        <li>Sábado · 08h às 19h</li>
+        <li>Domingo · 08h às 12h</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© MMXXVI · Walter &amp; Flores · Todos os direitos reservados</span>
+    <span>Edição N. XII · Coração de Junho</span>
+  </div>
+</footer>
+
+<script>
+  (async () => {
+    try {
+      if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready;
+      }
+    } catch(e){}
+    await new Promise(r => setTimeout(r, 500));
+    window.print();
+  })();
+</script>
+
+</body>
+</html>
