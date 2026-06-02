@@ -305,6 +305,164 @@
     .quote blockquote{font-size:26px}
     .footer-grid{grid-template-columns:1fr;gap:30px}
   }
+
+  /* ============ MONTE SEU BUQUÊ ============ */
+  .builder-head{
+    background:var(--green-800);color:var(--cream);
+    padding:90px 80px;text-align:center;position:relative;
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  }
+  .builder-head .smallcaps{color:var(--gold-soft)}
+  .builder-head h3{
+    font-family:'Italiana',serif;font-size:72px;color:var(--cream);
+    margin:18px 0 10px;letter-spacing:.02em;
+  }
+  .builder-head h3 em{color:var(--bordeaux-700);font-style:italic;font-family:'Cormorant Garamond',serif}
+  .builder-head .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:rgba(243,234,215,.7)}
+
+  .builder-outer{background:var(--paper);padding:80px 80px 110px}
+  .builder-body{
+    max-width:1320px;margin:0 auto;
+    display:grid;grid-template-columns:1fr 400px;gap:72px;align-items:start;
+  }
+
+  /* palette */
+  .palette-eyebrow{display:flex;align-items:center;gap:14px;color:var(--bordeaux-800);margin-bottom:32px}
+  .palette-eyebrow .bar{width:42px;height:1px;background:currentColor}
+  .palette-eyebrow span{font-family:'Cormorant Garamond',serif;font-size:22px}
+
+  .flower-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+  .flower-tile{
+    background:var(--cream);border:1px solid var(--rule);
+    position:relative;display:flex;flex-direction:column;
+    transition:transform .35s ease,box-shadow .35s ease;
+  }
+  .flower-tile:hover{transform:translateY(-4px);box-shadow:0 22px 44px -20px rgba(14,42,28,.28)}
+
+  .tile-img{width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--green-900)}
+  .tile-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
+  .flower-tile:hover .tile-img img{transform:scale(1.06)}
+
+  .tile-info{padding:11px 13px 12px;flex:1}
+  .tile-name{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--green-800);line-height:1.2}
+  .tile-latin{font-family:'Cormorant Garamond',serif;font-size:12px;font-style:italic;color:#9a8a78;margin-top:2px}
+
+  .tile-controls{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:9px 13px;border-top:1px solid var(--rule);background:var(--paper);
+  }
+  .tile-btn{
+    width:28px;height:28px;border:1px solid var(--green-800);background:transparent;
+    color:var(--green-800);font-size:16px;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .2s;font-family:'Inter',sans-serif;
+  }
+  .tile-btn:hover{background:var(--green-800);color:var(--cream)}
+  .tile-btn:disabled{opacity:.28;cursor:not-allowed}
+  .tile-btn:disabled:hover{background:transparent;color:var(--green-800)}
+  .tile-count{font-family:'Italiana',serif;font-size:20px;color:var(--green-800);min-width:22px;text-align:center}
+
+  .tile-badge{
+    position:absolute;top:9px;right:9px;
+    background:var(--bordeaux-800);color:var(--cream);
+    width:22px;height:22px;border-radius:50%;
+    font-size:11px;font-family:'Inter',sans-serif;font-weight:500;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;transform:scale(.5);transition:opacity .25s,transform .3s cubic-bezier(.34,1.56,.64,1);
+    pointer-events:none;
+  }
+  .flower-tile.has-flowers .tile-badge{opacity:1;transform:scale(1)}
+
+  /* bouquet stage */
+  .bouquet-stage{position:sticky;top:36px;display:flex;flex-direction:column}
+
+  .stage-frame{
+    border:1px solid var(--rule);background:var(--green-900);
+    position:relative;overflow:hidden;
+  }
+
+  .bouquet-canvas{position:relative;width:100%;height:430px;overflow:hidden}
+
+  .bouquet-empty{
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:18px;
+    pointer-events:none;
+  }
+  .bouquet-empty .ei{
+    font-family:'Italiana',serif;font-size:72px;line-height:1;
+    color:rgba(184,147,90,.2);
+  }
+  .bouquet-empty p{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;
+    color:rgba(243,234,215,.3);text-align:center;max-width:220px;line-height:1.5;
+  }
+
+  .bouquet-token{
+    position:absolute;
+    width:72px;height:72px;border-radius:50%;
+    background-size:cover;background-position:center;
+    border:2px solid rgba(243,234,215,.18);
+    box-shadow:0 6px 18px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.1);
+    transition:left .45s cubic-bezier(.34,1.56,.64,1),
+               top .45s cubic-bezier(.34,1.56,.64,1),
+               opacity .3s ease;
+    animation:tokenPop .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes tokenPop{
+    from{opacity:0;transform:scale(.5)}
+    to{opacity:1;transform:scale(1)}
+  }
+
+  .bouquet-stem-overlay{
+    position:absolute;bottom:0;left:0;right:0;height:90px;
+    background:linear-gradient(to top,rgba(8,27,18,1) 0%,rgba(8,27,18,.7) 50%,transparent 100%);
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;
+    pointer-events:none;
+  }
+  .bouquet-stem-overlay svg{width:100px;opacity:.7}
+
+  /* summary */
+  .stage-summary{
+    background:var(--cream);border:1px solid var(--rule);border-top:none;
+    padding:22px 22px 26px;
+  }
+  .summary-label{
+    font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--green-700);margin-bottom:16px;display:block;
+  }
+  .summary-list{list-style:none;min-height:52px;display:flex;flex-direction:column;gap:9px;margin-bottom:16px}
+  .summary-item{display:flex;align-items:center;gap:10px;animation:fadeUp .28s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  .s-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .s-name{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--ink);flex:1}
+  .s-qty{font-family:'Italiana',serif;font-size:14px;color:var(--gold);letter-spacing:.18em}
+  .summary-hint{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:#b0a090}
+
+  .summary-rule{height:1px;background:var(--rule);margin:14px 0}
+  .summary-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
+  .summary-total .st-label{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--green-700);letter-spacing:.22em;text-transform:uppercase}
+  .summary-total .st-count{font-family:'Italiana',serif;font-size:30px;color:var(--bordeaux-800);letter-spacing:.04em}
+
+  .btn-encomendar{
+    width:100%;padding:14px;background:var(--green-800);color:var(--cream);border:none;
+    font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.36em;text-transform:uppercase;
+    cursor:pointer;transition:background .25s;
+  }
+  .btn-encomendar:hover{background:var(--green-700)}
+  .btn-encomendar:disabled{background:rgba(14,42,28,.2);color:rgba(243,234,215,.35);cursor:not-allowed}
+
+  @media (max-width:1100px){
+    .builder-body{grid-template-columns:1fr}
+    .bouquet-stage{position:static;order:-1}
+    .flower-grid{grid-template-columns:repeat(4,1fr)}
+  }
+  @media (max-width:720px){
+    .builder-head{padding:60px 24px}
+    .builder-head h3{font-size:46px}
+    .builder-outer{padding:40px 24px 60px}
+    .flower-grid{grid-template-columns:repeat(2,1fr)}
+  }
 </style>
 </head>
 <body>
@@ -1091,6 +1249,166 @@
         </div>
       </article>
 
+      <!-- CARD 36 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/kit-urso-rosas-lilas-caixa-rosa.jpg" alt="Urso de pelúcia bege com coração Te Quiero ao lado de buquê de rosas rosa e lilás em caixa rosa com laço dourado">
+          <span class="ribbon" style="background:var(--bordeaux-800)">Kit Presente</span>
+          <span class="code">WF · 036</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;XXXVI</span>
+          <span class="cat">Kits &amp; Presentes</span>
+        </div>
+        <h4>Amor <em>&amp; Rosas</em></h4>
+        <p class="desc" contenteditable="true">Urso bege com coração "Te Quiero" ao lado de buquê de rosas rosa e lilás em caixa presente rosa com laço dourado — o presente completo para quem você ama. [descrição editável]</p>
+        <div class="card-footer">
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 37 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/kit-cachorro-girassois-amor-ferrero.jpg" alt="Cesta presente vermelha e dourada com girassóis, rosas vermelhas, cachorrinho de pelúcia, Ferrero Rocher e tag Love">
+          <span class="ribbon" style="background:var(--bordeaux-800)">Kit Amor</span>
+          <span class="code">WF · 037</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;XXXVII</span>
+          <span class="cat">Kits &amp; Presentes</span>
+        </div>
+        <h4>Kit <em>Amor &amp; Sol</em></h4>
+        <p class="desc" contenteditable="true">Cesta especial com girassóis, rosas vermelhas, alstroemérias, cachorrinho de pelúcia, Ferrero Rocher e tag "Love" — a declaração perfeita em flores e afeto. [descrição editável]</p>
+        <div class="card-footer">
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 38 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/kit-urso-rosa-cesta-rosas-pink.jpg" alt="Cesta de vime com rosas pink, alstroemérias roxas, gipsofila, urso rosa e Ferrero Rocher">
+          <span class="ribbon">Cesta Floral</span>
+          <span class="code">WF · 038</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;XXXVIII</span>
+          <span class="cat">Kits &amp; Presentes</span>
+        </div>
+        <h4>Cesta <em>Pink &amp; Amor</em></h4>
+        <p class="desc" contenteditable="true">Cesta de vime com rosas pink, alstroemérias roxas e gipsofila, acompanhada de urso rosa e Ferrero Rocher — uma explosão de cor e carinho. [descrição editável]</p>
+        <div class="card-footer">
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 39 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/kit-buque-rosas-vermelhas-vinho.jpg" alt="Buquê de rosas vermelhas com alstroemérias e laço dourado ao lado de caixa Com Carinho com Ferrero Rocher e vinho">
+          <span class="ribbon" style="background:var(--bordeaux-800)">Com Carinho</span>
+          <span class="code">WF · 039</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;XXXIX</span>
+          <span class="cat">Kits &amp; Presentes</span>
+        </div>
+        <h4>Com <em>Carinho</em></h4>
+        <p class="desc" contenteditable="true">Exuberante buquê de rosas vermelhas e alstroemérias com laço dourado, acompanhado de caixa especial "Com Carinho" com Ferrero Rocher e vinho — para celebrar os momentos mais especiais. [descrição editável]</p>
+        <div class="card-footer">
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+      <!-- CARD 40 -->
+      <article class="card">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="card-img">
+          <img src="images/kit-urso-branco-tulipas-ferrero.jpg" alt="Caixa floral verde com tulipas rosa, alstroemérias, urso branco de pelúcia e Ferrero Rocher">
+          <span class="ribbon">Kit Especial</span>
+          <span class="code">WF · 040</span>
+        </div>
+        <div class="card-meta">
+          <span class="roman">N.&nbsp;XL</span>
+          <span class="cat">Kits &amp; Presentes</span>
+        </div>
+        <h4>Primavera <em>Encantada</em></h4>
+        <p class="desc" contenteditable="true">Delicada caixa floral com tulipas rosa, alstroemérias e gipsofila, acompanhada de urso branco e Ferrero Rocher — um presente que encanta com suavidade e elegância. [descrição editável]</p>
+        <div class="card-footer">
+          <button class="btn">Encomendar</button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ MONTE SEU BUQUÊ ============ -->
+<section data-screen-label="05 Monte seu Buquê">
+  <div class="builder-head">
+    <span class="smallcaps">Atelier · Composição Livre</span>
+    <h3>Monte <em>seu Buquê</em></h3>
+    <div class="sub">Escolha as flores, defina a quantidade e veja a composição em tempo real</div>
+  </div>
+
+  <div class="builder-outer">
+    <div class="builder-body">
+
+      <!-- LEFT: palette de flores -->
+      <div>
+        <div class="palette-eyebrow">
+          <span class="bar"></span>
+          <span>Escolha as flores</span>
+        </div>
+        <div class="flower-grid" id="flowerGrid">
+          <!-- tiles gerados por JS -->
+        </div>
+      </div>
+
+      <!-- RIGHT: pré-visualização -->
+      <div class="bouquet-stage">
+        <div class="stage-frame">
+          <div class="bouquet-canvas" id="bouquetCanvas">
+            <div class="bouquet-empty" id="bouquetEmpty">
+              <div class="ei">✦</div>
+              <p>Adicione flores ao lado para montar seu buquê</p>
+            </div>
+          </div>
+          <div class="bouquet-stem-overlay">
+            <svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 50 C18 32,46 26,50 22 C54 26,82 32,82 50" fill="rgba(184,147,90,.12)" stroke="rgba(184,147,90,.45)" stroke-width="0.8"/>
+              <path d="M28 50 C28 34,47 30,50 26 C53 30,72 34,72 50" fill="rgba(184,147,90,.07)" stroke="rgba(184,147,90,.28)" stroke-width="0.6"/>
+              <line x1="50" y1="22" x2="50" y2="50" stroke="rgba(184,147,90,.5)" stroke-width="1.4"/>
+              <line x1="44" y1="36" x2="50" y2="28" stroke="rgba(184,147,90,.3)" stroke-width="0.7"/>
+              <line x1="56" y1="36" x2="50" y2="28" stroke="rgba(184,147,90,.3)" stroke-width="0.7"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="stage-summary">
+          <span class="summary-label">Composição</span>
+          <ul class="summary-list" id="summaryList">
+            <li class="summary-hint" id="summaryHint">Nenhuma flor selecionada ainda.</li>
+          </ul>
+          <div class="summary-rule"></div>
+          <div class="summary-total">
+            <span class="st-label">Total de hastes</span>
+            <span class="st-count" id="stemTotal">0</span>
+          </div>
+          <button class="btn-encomendar" id="btnEncomendar" disabled>Encomendar este Buquê</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1143,5 +1461,178 @@
   </div>
 </footer>
 
+
+<script>
+(function () {
+  'use strict';
+
+  const FLOWERS = [
+    { id: 'rosa-vermelha',  name: 'Rosa Vermelha',      latin: 'Rosa × hybrida',        color: '#8B1A1A', img: 'images/buque-rosas-vermelhas.jpg'       },
+    { id: 'rosa-pink',      name: 'Rosa Pink',           latin: 'Rosa × hybrida',        color: '#C8748E', img: 'images/buque-rosas-pink.jpg'             },
+    { id: 'rosa-azul',      name: 'Rosa Azul',           latin: 'Rosa tingida',          color: '#3A6BC9', img: 'images/buque-rosas-azuis.jpg'            },
+    { id: 'girassol',       name: 'Girassol',            latin: 'Helianthus annuus',     color: '#E8A000', img: 'images/buque-girassois.jpg'              },
+    { id: 'lirio-branco',   name: 'Lírio Branco',        latin: 'Lilium orientalis',     color: '#D4C9A8', img: 'images/buque-lirios-brancos.jpg'         },
+    { id: 'lirio-rosa',     name: 'Lírio Rosa',          latin: 'Lilium asiaticum',      color: '#D988A0', img: 'images/buque-lirios-rosa.jpg'            },
+    { id: 'orquidea-lilas', name: 'Orquídea Lilás',      latin: 'Phalaenopsis',          color: '#8B5BA6', img: 'images/orquidea-lilas.jpg'               },
+    { id: 'orquidea-branca',name: 'Orquídea Branca',     latin: 'Phalaenopsis',          color: '#B8B0A0', img: 'images/orquidea-branca.jpg'              },
+    { id: 'crisantemo',     name: 'Crisântemo',          latin: 'Chrysanthemum morifolium', color: '#D4A820', img: 'images/buque-crisantemos-jornal.jpg'  },
+    { id: 'gerbera',        name: 'Gérbera',             latin: 'Gerbera jamesonii',     color: '#D03030', img: 'images/buque-festa-love.jpg'             },
+    { id: 'silvestre',      name: 'Flores Silvestres',   latin: 'Mix silvestre',         color: '#6A9A48', img: 'images/buque-silvestre.jpg'              },
+    { id: 'solidago',       name: 'Solidago',            latin: 'Solidago canadensis',   color: '#C4941A', img: 'images/buque-girassois-solidago.jpg'     },
+  ];
+
+  const state = {};
+  FLOWERS.forEach(function (f) { state[f.id] = 0; });
+
+  const grid        = document.getElementById('flowerGrid');
+  const canvas      = document.getElementById('bouquetCanvas');
+  const emptyEl     = document.getElementById('bouquetEmpty');
+  const summaryList = document.getElementById('summaryList');
+  const summaryHint = document.getElementById('summaryHint');
+  const stemTotal   = document.getElementById('stemTotal');
+  const btnOrder    = document.getElementById('btnEncomendar');
+
+  /* ── build palette tiles ───────────────────────────────── */
+  FLOWERS.forEach(function (f) {
+    var tile = document.createElement('article');
+    tile.className = 'flower-tile';
+    tile.id = 'tile-' + f.id;
+    tile.innerHTML =
+      '<span class="tile-badge" id="badge-' + f.id + '">0</span>' +
+      '<div class="tile-img"><img src="' + f.img + '" alt="' + f.name + '" loading="lazy"></div>' +
+      '<div class="tile-info">' +
+        '<div class="tile-name">' + f.name + '</div>' +
+        '<div class="tile-latin">' + f.latin + '</div>' +
+      '</div>' +
+      '<div class="tile-controls">' +
+        '<button class="tile-btn" id="minus-' + f.id + '" disabled>&#8722;</button>' +
+        '<span class="tile-count" id="count-' + f.id + '">0</span>' +
+        '<button class="tile-btn" id="plus-' + f.id + '">+</button>' +
+      '</div>';
+    tile.querySelector('#plus-' + f.id).addEventListener('click', function () { change(f.id, 1); });
+    tile.querySelector('#minus-' + f.id).addEventListener('click', function () { change(f.id, -1); });
+    grid.appendChild(tile);
+  });
+
+  /* ── state mutation ─────────────────────────────────────── */
+  function change(id, delta) {
+    state[id] = Math.max(0, state[id] + delta);
+    refreshTile(id);
+    renderCanvas();
+    renderSummary();
+  }
+
+  function refreshTile(id) {
+    var n     = state[id];
+    var tile  = document.getElementById('tile-' + id);
+    document.getElementById('count-' + id).textContent = n;
+    document.getElementById('badge-' + id).textContent = n;
+    document.getElementById('minus-' + id).disabled = (n === 0);
+    tile.classList.toggle('has-flowers', n > 0);
+  }
+
+  function stems() {
+    var list = [];
+    FLOWERS.forEach(function (f) {
+      for (var i = 0; i < state[f.id]; i++) { list.push(f); }
+    });
+    return list;
+  }
+
+  /* ── bouquet canvas ─────────────────────────────────────── */
+  function renderCanvas() {
+    canvas.querySelectorAll('.bouquet-token').forEach(function (t) { t.remove(); });
+
+    var list = stems();
+    if (list.length === 0) { emptyEl.style.display = 'flex'; return; }
+    emptyEl.style.display = 'none';
+
+    var W  = canvas.offsetWidth  || 400;
+    var H  = canvas.offsetHeight || 430;
+    var cx = W / 2;
+    var cy = H - 18;          /* convergence point (stem wrap) */
+    var R  = 36;              /* token radius in px */
+    var MAX = 22;             /* max visible tokens */
+
+    var visible = list.slice(0, MAX);
+    var n       = visible.length;
+
+    /* fan angle grows with stem count, capped at 130° */
+    var halfFan = n === 1 ? 0 : Math.min(65, 22 + n * 4.5);
+
+    /* compute raw positions */
+    var positions = visible.map(function (flower, i) {
+      var t        = n === 1 ? 0.5 : i / (n - 1);
+      var angleDeg = (90 + halfFan) - t * halfFan * 2;
+      var angleRad = angleDeg * Math.PI / 180;
+
+      /* center flowers slightly longer → appear closer */
+      var centerBias = 1 - Math.abs(t - 0.5) * 0.28;
+      /* second "ring" for large bouquets */
+      var ring = Math.floor(i / 11);
+      var dist = (108 + ring * 30) * centerBias + (i % 3) * 8;
+
+      return {
+        flower: flower,
+        x: cx + Math.cos(angleRad) * dist,
+        y: cy - Math.sin(angleRad) * dist,
+      };
+    });
+
+    /* sort by y so lower (fronter) flowers render last (higher z) */
+    positions.sort(function (a, b) { return a.y - b.y; });
+
+    positions.forEach(function (pos, zi) {
+      var el = document.createElement('div');
+      el.className = 'bouquet-token';
+      el.style.left            = (pos.x - R) + 'px';
+      el.style.top             = (pos.y - R) + 'px';
+      el.style.zIndex          = zi + 1;
+      el.style.backgroundImage = 'url(' + pos.flower.img + ')';
+      canvas.appendChild(el);
+    });
+  }
+
+  /* ── summary panel ──────────────────────────────────────── */
+  function renderSummary() {
+    var total = stems().length;
+    stemTotal.textContent = total;
+    btnOrder.disabled = (total === 0);
+
+    summaryList.querySelectorAll('.summary-item').forEach(function (el) { el.remove(); });
+
+    if (total === 0) { summaryHint.style.display = ''; return; }
+    summaryHint.style.display = 'none';
+
+    FLOWERS.forEach(function (f) {
+      if (!state[f.id]) return;
+      var li = document.createElement('li');
+      li.className = 'summary-item';
+      li.innerHTML =
+        '<span class="s-dot" style="background:' + f.color + '"></span>' +
+        '<span class="s-name">' + f.name + '</span>' +
+        '<span class="s-qty">× ' + state[f.id] + '</span>';
+      summaryList.appendChild(li);
+    });
+  }
+
+  /* ── order button → WhatsApp ────────────────────────────── */
+  btnOrder.addEventListener('click', function () {
+    var lines = FLOWERS
+      .filter(function (f) { return state[f.id] > 0; })
+      .map(function (f) { return f.name + ' × ' + state[f.id]; });
+    var msg = 'Olá! Gostaria de encomendar um buquê personalizado:\n\n' +
+      lines.join('\n') + '\n\nTotal: ' + stems().length + ' hastes.';
+    window.open('https://wa.me/552127917153?text=' + encodeURIComponent(msg), '_blank');
+  });
+
+  /* re-render canvas on window resize */
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(renderCanvas, 120);
+  });
+})();
+</script>
 </body>
 </html>
