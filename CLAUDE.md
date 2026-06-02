@@ -2,63 +2,62 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
+## Project overview
 
-A static HTML product catalog for **Walter & Flores** — a floriculture shop in Nilópolis, RJ. The catalog is themed for Valentine's Day (*Dia dos Namorados*) and is entirely self-contained in HTML files with no build system.
+Static HTML catalog for **Walter & Flores**, a flower shop in Nilópolis/RJ. No build system, no dependencies, no package manager — everything is vanilla HTML, CSS, and JavaScript.
 
 ## Files
 
 | File | Purpose |
-|------|---------|
-| `Catalogo Walter Flores.html` | Primary web catalog — open directly in browser |
-| `Catalogo Walter Flores-print.html` | Print-optimized variant (A4 landscape, 6 cards/page) |
-| `Catalogo Walter Flores - Standalone.html` | Bundled self-contained version; loads images as base64 blobs at runtime via `DecompressionStream` |
+|---|---|
+| `Catalogo Walter Flores.html` | Main working file — the editable catalog |
+| `Catalogo Walter Flores-print.html` | Print-optimized version |
+| `Catalogo Walter Flores - Standalone.html` | Self-contained bundle (assets inlined as base64) — do not edit directly |
 
-No build step. Open HTML files directly in the browser.
+All changes should be made to **`Catalogo Walter Flores.html`**. The standalone file is a generated artifact.
 
-## Architecture
+## Design system (CSS variables)
 
-All CSS lives in `<style>` blocks within each HTML file — there are no external stylesheets. The three HTML files share nearly identical CSS; changes to visual design must be applied to each file separately.
-
-### Design Tokens (CSS custom properties)
 ```css
---green-900 / -800 / -700 / -600 / -500  /* dark forest backgrounds */
---bordeaux-900 / -800 / -700              /* wine/accent color */
---cream / --cream-2 / --paper             /* off-white backgrounds */
---gold / --gold-soft                      /* #b8935a / #c9a86b */
---ink                                     /* body text: #1a1410 */
---rule                                    /* rgba gold, for dividing lines */
+--green-900: #081b12   /* darkest background */
+--green-800: #0e2a1c   /* section headers, card text */
+--green-700: #163826
+--bordeaux-800: #5a0f1f  /* accents, prices, ribbons */
+--bordeaux-700: #7a1730
+--cream: #f3ead7       /* main background */
+--paper: #f7f0dd       /* card background */
+--gold: #b8935a        /* borders, ornaments */
+--gold-soft: #c9a86b   /* labels, secondary gold */
+--rule: rgba(184,147,90,.45)  /* divider lines */
 ```
 
-### Typography
-Three Google Fonts loaded via CDN:
-- `Italiana` — brand name, section headings, decorative numerals
-- `Cormorant Garamond` — body serif text, card descriptions, prices
-- `Inter` — UI labels, smallcaps, buttons
+## Typography
 
-CSS utility classes: `.serif`, `.italiana`, `.smallcaps`
+Three Google Fonts families used throughout:
+- `'Italiana', serif` — brand name, large headings, ornamental numbers
+- `'Cormorant Garamond', serif` — body text, descriptions, prices, quotes
+- `'Inter', sans-serif` — small caps labels, utility text
 
-### Page Sections (in order)
-1. `.cover` — full-viewport hero with botanical SVG corner sprigs
-2. `.section-head` — dark green divider with collection title
-3. `.catalog` — product grid (3 columns on desktop, 2 on tablet, 1 on mobile)
-4. `.quote` — bordeaux interstitial with blockquote
-5. `footer` — dark footer with 4-column grid
+Utility classes: `.serif`, `.italiana`, `.smallcaps`
 
-### Product Cards
-Each `<article class="card">` contains:
-- `.card-img` — square image with `.ribbon` badge and `.code` (e.g. `WF · 001`)
-- `.card-meta` — Roman numeral + category label
-- `<h4>` — product name with `<em>` for italicized secondary word
-- `.desc` — description with `contenteditable="true"` (editable directly in browser)
-- `.card-footer` — price display + "Encomendar" button
+## Page structure (sections in order)
 
-### Print Version Specifics
-`-print.html` uses `@media print` overrides:
-- Pages sized at 297mm × 210mm (A4 landscape)
-- `.card:nth-child(6n)` triggers `break-after: page` for 6-cards-per-page pagination
-- Hover transitions and `contenteditable` outlines are suppressed
+1. `.cover` — full-viewport hero with botanical SVG corners and brand identity
+2. `.section-head` — dark green header introducing the collection
+3. `.catalog` → `.grid` → `.card` × 35 — the product grid
+4. `.quote` — bordeaux interstitial with editorial quote
+5. `footer` — contact info, address, hours
 
-### Images
-- `images/` — product photos (JPG)
-- `uploads/` — AI-generated images (PNG, from Gemini)
+## Card anatomy
+
+Each `.card` article contains:
+- `.card-img` — 1:1 aspect ratio image + `.ribbon` badge + `.code` (WF · 00N)
+- `.card-meta` — roman numeral + category label
+- `h4` — product name (regular + `em` italic part)
+- `.desc` — description, marked `contenteditable="true"` (editable in-browser)
+- `.card-footer` → `.btn` — "Encomendar" CTA
+
+## Image assets
+
+- `images/` — product photos (buquês, orquídeas) used by the main catalog
+- `uploads/` — AI-generated flower images (Gemini), not currently displayed in the catalog
