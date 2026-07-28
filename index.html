@@ -413,14 +413,26 @@
   .m-info svg{width:22px;height:22px;color:var(--terra);flex-shrink:0;margin-top:1px}
   .m-info b{display:block;font-size:13px;color:var(--terra-ink);letter-spacing:.02em;margin-bottom:3px}
   .m-info span{font-size:12.5px;color:var(--ink-soft);line-height:1.55}
-  .m-frete h4{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);margin:0 0 10px;font-weight:600}
-  .frete-row{
-    display:flex;gap:11px;padding:9px 0;border-top:1px solid var(--line);font-size:12.5px;
+  .m-form{margin-bottom:18px}
+  .m-label{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--terra);font-weight:600;margin:12px 0 5px}
+  .m-label:first-child{margin-top:0}
+  .m-input{
+    width:100%;font-family:var(--sans);font-size:14px;color:var(--ink);
+    background:var(--peach-2);border:1px solid var(--line);border-radius:10px;
+    padding:11px 13px;transition:border-color .25s ease,box-shadow .25s ease;
   }
-  .frete-row .fv{font-family:var(--serif);font-weight:600;color:var(--terra-deep);white-space:nowrap;min-width:56px}
-  .frete-row .fr{color:var(--ink)}
-  .frete-row .fr b{display:block;font-weight:600;color:var(--terra-ink);margin-bottom:2px;font-family:var(--sans);font-size:12px}
-  .frete-row .fr span{color:var(--ink-soft);font-size:11.5px;line-height:1.5}
+  .m-input:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 3px rgba(162,60,30,.1)}
+  select.m-input{cursor:pointer;appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A23C1E' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 13px center;padding-right:34px}
+  .m-row{display:flex;gap:10px}
+  .m-totals{background:var(--peach);border-radius:var(--r-sm);padding:15px 17px;margin-bottom:6px}
+  .m-trow{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;color:var(--ink-soft);padding:4px 0}
+  .m-trow em{font-style:normal;font-size:11px;color:var(--ink-soft);opacity:.8}
+  .m-trow span:last-child{font-family:var(--serif);color:var(--terra-deep);font-weight:500}
+  .m-tbig{border-top:1px solid var(--line-strong);margin-top:6px;padding-top:11px}
+  .m-tbig span:first-child{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--terra-ink)}
+  .m-tbig span:last-child{font-size:23px;font-weight:600}
   .m-actions{margin-top:22px;display:flex;flex-direction:column;gap:9px}
   .m-pay{
     display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;
@@ -913,13 +925,40 @@
         <svg><use href="#i-clock"/></svg>
         <div>
           <b>Entrega em aproximadamente 3 horas</b>
-          <span>Após a confirmação do pagamento, seu pedido é preparado e entregue em cerca de 3h dentro da nossa área de cobertura.</span>
+          <span>Após a confirmação do pagamento, preparamos e entregamos em cerca de 3h dentro da nossa área de cobertura.</span>
         </div>
       </div>
-      <div class="m-frete">
-        <h4>Valores de entrega por região</h4>
-        <div id="freteList"></div>
+
+      <div class="m-form">
+        <label class="m-label" for="fRegiao">Região de entrega</label>
+        <select id="fRegiao" class="m-input">
+          <option value="">Selecione sua região...</option>
+        </select>
+
+        <div class="m-row">
+          <div style="flex:2">
+            <label class="m-label" for="fRua">Rua / Logradouro</label>
+            <input id="fRua" class="m-input" type="text" placeholder="Ex.: Rua das Flores">
+          </div>
+          <div style="flex:1">
+            <label class="m-label" for="fNum">Número</label>
+            <input id="fNum" class="m-input" type="text" placeholder="Nº">
+          </div>
+        </div>
+
+        <label class="m-label" for="fRef">Complemento / Referência</label>
+        <input id="fRef" class="m-input" type="text" placeholder="Ex.: Apto 202, próximo à praça">
+
+        <label class="m-label" for="fNome">Seu nome</label>
+        <input id="fNome" class="m-input" type="text" placeholder="Nome de quem faz o pedido">
       </div>
+
+      <div class="m-totals">
+        <div class="m-trow"><span>Produto</span><span id="tProduto">R$ 0,00</span></div>
+        <div class="m-trow"><span>Frete <em id="tRegiaoNome">(selecione a região)</em></span><span id="tFrete">—</span></div>
+        <div class="m-trow m-tbig"><span>Total a pagar</span><span id="tGrand">R$ 0,00</span></div>
+      </div>
+
       <div id="mpBox">
         <p class="m-note" id="mpMsg" style="margin-bottom:12px"></p>
       </div>
@@ -927,7 +966,7 @@
         <button class="m-pay" id="btnPay"><svg><use href="#i-bag"/></svg> Pagar com Mercado Pago</button>
         <a class="m-wa" id="btnModalWa" href="#" target="_blank" rel="noopener"><svg><use href="#i-whats"/></svg> Prefiro combinar pelo WhatsApp</a>
       </div>
-      <p class="m-note">O frete é somado à parte, conforme o bairro de entrega, e confirmado no checkout ou pelo WhatsApp.</p>
+      <p class="m-note">Confirme os dados antes de pagar. A entrega é feita no endereço informado, dentro da nossa área de cobertura.</p>
     </div>
   </div>
 </div>
@@ -2106,22 +2145,47 @@ const FRETE = [
 const MP_ENDPOINT = ''; // ex.: '/api/criar-pagamento'  (vazio = ainda não configurado)
 
 const modalBg = document.getElementById('modalBg');
-const freteList = document.getElementById('freteList');
-freteList.innerHTML = FRETE.map(f=>`
-  <div class="frete-row">
-    <span class="fv">R$ ${f.v},00</span>
-    <span class="fr"><b>${f.r}</b><span>${f.b}</span></span>
-  </div>`).join('');
+
+/* preenche o select de regiões */
+const selRegiao = document.getElementById('fRegiao');
+FRETE.forEach((f,i)=>{
+  const o = document.createElement('option');
+  o.value = i;
+  o.textContent = `${f.r} — R$ ${f.v},00`;
+  selRegiao.appendChild(o);
+});
 
 let pedidoAtual = null;
 
-function abrirModal(nome, preco, waText){
-  pedidoAtual = {nome, preco, waText};
+function calcTotais(){
+  const preco = pedidoAtual ? pedidoAtual.preco : 0;
+  document.getElementById('tProduto').textContent = preco>0 ? 'R$ '+brl(preco) : 'A combinar';
+  const idx = selRegiao.value;
+  let frete = 0, nomeReg = '(selecione a região)';
+  if(idx!==''){
+    frete = FRETE[idx].v;
+    nomeReg = FRETE[idx].r;
+    document.getElementById('tFrete').textContent = 'R$ '+brl(frete);
+  } else {
+    document.getElementById('tFrete').textContent = '—';
+  }
+  document.getElementById('tRegiaoNome').textContent = '('+nomeReg+')';
+  const total = (preco>0?preco:0) + frete;
+  document.getElementById('tGrand').textContent = (preco>0 || frete>0) ? 'R$ '+brl(total) : 'R$ 0,00';
+  return {frete, nomeReg, total};
+}
+selRegiao.addEventListener('change', calcTotais);
+
+function abrirModal(nome, preco, waBase){
+  pedidoAtual = {nome, preco, waBase};
   document.getElementById('modalTitle').textContent = nome;
   document.getElementById('modalPrice').textContent = preco>0 ? 'R$ '+brl(preco) : 'Valor a combinar';
-  document.getElementById('btnModalWa').href = `https://wa.me/${PHONE}?text=${encodeURIComponent(waText)}`;
+  // limpa campos
+  selRegiao.value = '';
+  ['fRua','fNum','fRef','fNome'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('mpBox').classList.remove('show');
   document.getElementById('mpMsg').textContent = '';
+  calcTotais();
   modalBg.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -2133,12 +2197,39 @@ document.getElementById('modalX').addEventListener('click', fecharModal);
 modalBg.addEventListener('click', e=>{ if(e.target===modalBg) fecharModal(); });
 addEventListener('keydown', e=>{ if(e.key==='Escape' && modalBg.classList.contains('open')) fecharModal(); });
 
+/* valida e monta os dados de entrega */
+function coletarEntrega(){
+  const idx = selRegiao.value;
+  const rua = document.getElementById('fRua').value.trim();
+  const num = document.getElementById('fNum').value.trim();
+  const ref = document.getElementById('fRef').value.trim();
+  const nome = document.getElementById('fNome').value.trim();
+  if(idx===''){ alert('Por favor, selecione a região de entrega.'); selRegiao.focus(); return null; }
+  if(!rua){ alert('Por favor, informe a rua.'); document.getElementById('fRua').focus(); return null; }
+  if(!num){ alert('Por favor, informe o número.'); document.getElementById('fNum').focus(); return null; }
+  const f = FRETE[idx];
+  const t = calcTotais();
+  return { regiao:f.r, frete:f.v, rua, num, ref, nome, total:t.total };
+}
+
+function montarWhats(dados){
+  let msg = pedidoAtual.waBase + '\n\n📍 *Entrega*\n';
+  msg += `${dados.rua}, ${dados.num}`;
+  if(dados.ref) msg += ` — ${dados.ref}`;
+  msg += `\nRegião: ${dados.regiao}\n`;
+  if(dados.nome) msg += `Cliente: ${dados.nome}\n`;
+  msg += `\n🌸 Produto: ${pedidoAtual.preco>0?'R$ '+brl(pedidoAtual.preco):'a combinar'}`;
+  msg += `\n🚚 Frete: R$ ${brl(dados.frete)}`;
+  msg += `\n💰 *Total: R$ ${brl(dados.total)}*`;
+  return msg;
+}
+
 /* Botão "Comprar agora" dos cards de produto */
 document.getElementById('grid').addEventListener('click', e=>{
   const b = e.target.closest('.btn-buy');
   if(!b) return;
   const nome = b.dataset.nome, preco = Number(b.dataset.preco), code = b.dataset.buy;
-  abrirModal(nome, preco, `Olá! Quero comprar: ${nome} (${code})${preco>0?' — R$ '+brl(preco):''} 🌸`);
+  abrirModal(nome, preco, `Olá! Quero comprar: ${nome} (${code})`);
 });
 
 /* Botão "Comprar agora" do builder */
@@ -2146,36 +2237,47 @@ document.getElementById('btnBuyBuild').addEventListener('click', ()=>{
   const linhas = (window._chosen||[]).map(f=>`• ${f.name} × ${f.qty} — R$ ${brl(f.qty*f.price)}`).join('\n');
   const total = Number(btnBuild.dataset.total||0);
   abrirModal('Buquê personalizado', total,
-    `Olá! Montei meu buquê no site 🌸\n\n${linhas}\n\nEmbalagem e laço: R$ ${brl(WRAP_PRICE)}\nTotal: R$ ${brl(total)}\n\nQuero comprar!`);
+    `Olá! Montei meu buquê no site 🌸\n\n${linhas}\n\nEmbalagem e laço: R$ ${brl(WRAP_PRICE)}`);
+});
+
+/* atualiza o link do WhatsApp do modal sempre que abrir/mudar */
+document.getElementById('btnModalWa').addEventListener('click', function(e){
+  const dados = coletarEntrega();
+  if(!dados){ e.preventDefault(); return; }
+  this.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(montarWhats(dados))}`;
 });
 
 /* Botão "Pagar com Mercado Pago" dentro do modal */
 document.getElementById('btnPay').addEventListener('click', async ()=>{
+  const dados = coletarEntrega();
+  if(!dados) return;
   const box = document.getElementById('mpBox');
   const msg = document.getElementById('mpMsg');
   box.classList.add('show');
 
   if(!MP_ENDPOINT){
-    msg.innerHTML = 'O pagamento online está sendo configurado. Por enquanto, finalize seu pedido pelo WhatsApp — respondemos na hora e enviamos o link de pagamento do Mercado Pago. 🌸';
+    msg.innerHTML = `Total com entrega: <b>R$ ${brl(dados.total)}</b>.<br>O pagamento online está sendo configurado. Toque em "combinar pelo WhatsApp" para finalizar agora — enviamos o link de pagamento na hora. 🌸`;
     return;
   }
 
-  /* Quando o backend estiver pronto, ele deve receber o pedido e
-     retornar { init_point, qr_code_base64 } gerados pelo Mercado Pago. */
   msg.textContent = 'Gerando seu pagamento...';
   try{
     const resp = await fetch(MP_ENDPOINT, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ titulo: pedidoAtual.nome, valor: pedidoAtual.preco })
+      body: JSON.stringify({
+        titulo: pedidoAtual.nome + ' + entrega ' + dados.regiao,
+        valor: dados.total,
+        entrega: dados
+      })
     });
     const data = await resp.json();
     let html = '';
     if(data.qr_code_base64){
-      html += `<img src="data:image/png;base64,${data.qr_code_base64}" alt="QR Code Pix/Mercado Pago" width="180" height="180">`;
-      html += `<p class="m-note" style="margin-top:10px">Escaneie o QR code para pagar</p>`;
+      html += `<img src="data:image/png;base64,${data.qr_code_base64}" alt="QR Code" width="180" height="180">`;
+      html += `<p class="m-note" style="margin-top:10px">Escaneie para pagar R$ ${brl(dados.total)}</p>`;
     }
     if(data.init_point){
-      html += `<a class="m-pay" style="margin-top:12px;text-decoration:none" href="${data.init_point}" target="_blank" rel="noopener">Abrir página de pagamento</a>`;
+      html += `<a class="m-pay" style="margin-top:12px;text-decoration:none" href="${data.init_point}" target="_blank" rel="noopener">Pagar R$ ${brl(dados.total)}</a>`;
     }
     msg.innerHTML = html || 'Não foi possível gerar o pagamento. Tente pelo WhatsApp.';
   }catch(err){
