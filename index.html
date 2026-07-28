@@ -359,26 +359,88 @@
   }
   .card .desc:focus{-webkit-line-clamp:unset;background:rgba(255,255,255,.5);box-shadow:0 0 0 1px var(--line-strong);padding:6px}
   .card-foot{
-    margin-top:auto;padding-top:15px;
-    display:flex;align-items:center;justify-content:space-between;gap:10px;
-    border-top:1px solid var(--line);margin-top:15px;
+    margin-top:auto;padding-top:13px;
+    display:flex;align-items:center;justify-content:flex-start;gap:10px;
+    border-top:1px solid var(--line);margin-top:13px;
   }
   .price{display:flex;align-items:baseline;gap:3px;font-family:var(--serif);color:var(--terra-deep)}
   .price .cur{font-size:11px;letter-spacing:.1em;font-weight:500}
   .price .val{font-size:25px;font-weight:600;letter-spacing:-.01em;outline:none;border-radius:5px}
   .price .val:focus{background:rgba(255,255,255,.7);box-shadow:0 0 0 1px var(--line-strong)}
   .price .cts{font-size:11px;align-self:flex-start;margin-top:6px;font-weight:500}
-  .order{
-    display:inline-flex;align-items:center;gap:8px;
-    font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
-    color:var(--cream);background:var(--terra);border-radius:999px;padding:10px 15px;
-    transition:all .3s ease;white-space:nowrap;
+  .card-actions{display:flex;flex-direction:column;gap:7px;margin-top:11px}
+  .btn-wa,.btn-buy{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+    border-radius:999px;padding:11px 14px;transition:all .3s ease;white-space:nowrap;cursor:pointer;width:100%;
   }
-  .order:hover{background:var(--terra-deep)}
-  .order svg{width:13px;height:13px}
+  .btn-wa svg,.btn-buy svg{width:15px;height:15px;flex-shrink:0}
+  .btn-wa{background:#25A65A;color:#fff}
+  .btn-wa:hover{background:#1E8C4B;transform:translateY(-1px)}
+  .btn-buy{background:var(--terra);color:var(--cream)}
+  .btn-buy:hover{background:var(--terra-deep);transform:translateY(-1px)}
   .card .col-arrow{width:30px;height:30px}
   .card:hover .col-arrow{background:var(--terra);border-color:var(--terra);color:var(--cream)}
   .grid-empty{padding:60px 0;text-align:center;color:var(--ink-soft);font-family:var(--serif);font-style:italic;font-size:19px;display:none}
+
+  /* ====================== MODAL CHECKOUT ====================== */
+  .modal-bg{
+    position:fixed;inset:0;z-index:200;background:rgba(58,16,4,.55);backdrop-filter:blur(5px);
+    display:flex;align-items:center;justify-content:center;padding:20px;
+    opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;
+  }
+  .modal-bg.open{opacity:1;visibility:visible}
+  .modal{
+    background:var(--cream);border-radius:var(--r-lg);max-width:460px;width:100%;
+    max-height:90vh;overflow-y:auto;position:relative;
+    box-shadow:0 40px 90px rgba(58,16,4,.4);
+    transform:translateY(20px) scale(.97);transition:transform .35s cubic-bezier(.16,1,.3,1);
+  }
+  .modal-bg.open .modal{transform:none}
+  .modal-x{
+    position:absolute;top:16px;right:16px;z-index:3;width:34px;height:34px;border-radius:50%;
+    background:rgba(162,60,30,.1);color:var(--terra-deep);display:flex;align-items:center;justify-content:center;
+    transition:background .25s ease;
+  }
+  .modal-x:hover{background:rgba(162,60,30,.2)}
+  .modal-x svg{width:16px;height:16px}
+  .modal-head{background:var(--terra);color:var(--cream);padding:26px 28px 22px;border-radius:var(--r-lg) var(--r-lg) 0 0}
+  .modal-head .caps{color:#F0B98E}
+  .modal-head h3{font-family:var(--serif);font-size:24px;font-weight:500;margin-top:8px;line-height:1.15}
+  .modal-head .m-price{font-family:var(--serif);font-size:20px;margin-top:6px;color:#F6C39C}
+  .modal-body{padding:24px 28px 28px}
+  .m-info{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:var(--r-sm);background:var(--peach);margin-bottom:18px}
+  .m-info svg{width:22px;height:22px;color:var(--terra);flex-shrink:0;margin-top:1px}
+  .m-info b{display:block;font-size:13px;color:var(--terra-ink);letter-spacing:.02em;margin-bottom:3px}
+  .m-info span{font-size:12.5px;color:var(--ink-soft);line-height:1.55}
+  .m-frete h4{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);margin:0 0 10px;font-weight:600}
+  .frete-row{
+    display:flex;gap:11px;padding:9px 0;border-top:1px solid var(--line);font-size:12.5px;
+  }
+  .frete-row .fv{font-family:var(--serif);font-weight:600;color:var(--terra-deep);white-space:nowrap;min-width:56px}
+  .frete-row .fr{color:var(--ink)}
+  .frete-row .fr b{display:block;font-weight:600;color:var(--terra-ink);margin-bottom:2px;font-family:var(--sans);font-size:12px}
+  .frete-row .fr span{color:var(--ink-soft);font-size:11.5px;line-height:1.5}
+  .m-actions{margin-top:22px;display:flex;flex-direction:column;gap:9px}
+  .m-pay{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;
+    background:#009EE3;color:#fff;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    padding:15px;border-radius:999px;transition:all .3s ease;cursor:pointer;
+  }
+  .m-pay:hover{background:#0089c7;transform:translateY(-1px)}
+  .m-pay svg{width:16px;height:16px}
+  .m-wa{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;
+    background:transparent;color:#25A65A;border:1px solid #25A65A;
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+    padding:13px;border-radius:999px;transition:all .3s ease;
+  }
+  .m-wa:hover{background:#25A65A;color:#fff}
+  .m-wa svg{width:15px;height:15px}
+  .m-note{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.5}
+  #mpBox{margin-top:16px;display:none;text-align:center}
+  #mpBox.show{display:block}
+  #mpBox img{margin:0 auto;border-radius:12px;border:1px solid var(--line)}
 
   /* ====================== BUILDER ====================== */
   .builder{position:relative;background:var(--green);color:#F4F1E6;overflow:hidden;margin-top:clamp(20px,4vh,40px)}
@@ -434,20 +496,26 @@
   .tcount{font-family:var(--serif);font-size:17px;font-weight:500;min-width:20px;text-align:center;color:#FBF7EA}
 
   .stage{position:sticky;top:96px;background:rgba(255,252,244,.06);border:1px solid rgba(244,241,230,.16);border-radius:var(--r-md);overflow:hidden}
-  .canvas{position:relative;height:250px;background:radial-gradient(70% 70% at 50% 42%, rgba(255,232,205,.12), rgba(0,0,0,.22));overflow:hidden}
-  .canvas-empty{
-    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-    pointer-events:none;transition:opacity .4s ease;
+  .tile-color-name{font-size:12px;color:#EFC7A0;margin-top:5px;font-weight:400;letter-spacing:.02em}
+  .tile-noimg{
+    width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    background:repeating-linear-gradient(45deg, rgba(244,241,230,.04) 0 10px, rgba(244,241,230,.08) 10px 20px);
+    color:rgba(244,241,230,.5);text-align:center;padding:10px;
   }
-  .canvas-empty svg{width:40px;height:40px;color:rgba(239,169,109,.35)}
-  .canvas-empty p{font-family:var(--serif);font-style:italic;font-size:15px;color:rgba(244,241,230,.4)}
-  .stem{
-    position:absolute;border-radius:50%;
-    box-shadow:0 3px 10px rgba(0,0,0,.35), inset 0 -2px 6px rgba(0,0,0,.28), inset 0 2px 5px rgba(255,255,255,.28);
-    animation:pop .5s cubic-bezier(.34,1.56,.64,1) both;
+  .tile-noimg svg{width:30px;height:30px;opacity:.5}
+  .tile-noimg span{font-size:10.5px;letter-spacing:.08em;line-height:1.4;text-transform:uppercase;font-weight:500}
+  .tile-colors{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .swatch{
+    position:relative;width:19px;height:19px;border-radius:50%;background:var(--sw);
+    border:2px solid rgba(244,241,230,.35);cursor:pointer;padding:0;
+    transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
   }
-  .stem::after{content:"";position:absolute;inset:32%;border-radius:50%;background:rgba(0,0,0,.16)}
-  @keyframes pop{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+  .swatch:hover{transform:scale(1.15)}
+  .swatch.on{border-color:#F4F1E6;box-shadow:0 0 0 2px rgba(239,169,109,.7)}
+  .swatch.noimg::after{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:linear-gradient(135deg, transparent 44%, rgba(255,255,255,.85) 45%, rgba(255,255,255,.85) 55%, transparent 56%);
+  }
   .stage-body{padding:18px 20px 20px}
   .stage-body h3{font-family:var(--serif);font-size:19px;font-weight:500;color:#FBF7EA;margin-bottom:12px}
   .sum{list-style:none;max-height:190px;overflow-y:auto;margin:0 -4px}
@@ -567,7 +635,6 @@
     .order{justify-content:center;font-size:9.5px;letter-spacing:.12em;padding:9px 12px}
     .sec-head{flex-direction:column;align-items:flex-start;gap:10px}
     .flower-grid{grid-template-columns:repeat(2,1fr)}
-    .canvas{height:200px}
   }
   @media (max-width:480px){
     .foot-grid{grid-template-columns:1fr}
@@ -605,6 +672,10 @@
   <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
     <path d="M12 20.5C6.5 16.5 3 13.3 3 9.6 3 7 5 5 7.5 5c1.8 0 3.4 1 4.5 2.6C13.1 6 14.7 5 16.5 5 19 5 21 7 21 9.6c0 3.7-3.5 6.9-9 10.9Z"/>
   </symbol>
+  <symbol id="i-whats" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.1-.3.2-.5 0-.7-.3-1.4-.6-2-1.4-.4-.5-.8-1.1-.9-1.3-.1-.2 0-.4.1-.5l.4-.4c.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5s-.6-1.5-.8-2c-.2-.5-.4-.4-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2s1 2.5 1.1 2.6c.1.2 1.9 2.9 4.6 4 .6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.1-.2-.2-.4-.3Z"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
   <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
     <path d="M5.5 3h3l1.7 4.3-2 1.6a13.5 13.5 0 0 0 6 6l1.6-2L20 14.6v3.3c0 1.2-1 2.2-2.2 2.1C10.3 19.4 4.6 13.7 4 6.2 3.9 4.5 4.4 3 5.5 3Z"/>
   </symbol>
@@ -649,7 +720,7 @@
       <a href="#ocasioes">Ocasiões</a>
       <a href="#contato">Contato</a>
     </nav>
-    <a class="nav-cta" href="tel:+552127917153">
+    <a class="nav-cta" href="tel:+5521964527031">
       <svg><use href="#i-phone"/></svg>
       (21) 2791-7153
     </a>
@@ -769,7 +840,7 @@
         <b><svg><use href="#i-flower"/></svg> Encomende com nossos floristas</b>
         <span>Atendimento personalizado de segunda a domingo · (21) 2791-7153</span>
       </div>
-      <a class="btn-solid" href="tel:+552127917153"><svg><use href="#i-phone"/></svg> Ligar agora</a>
+      <a class="btn-solid" href="tel:+5521964527031"><svg><use href="#i-phone"/></svg> Ligar agora</a>
     </div>
   </div>
 </section>
@@ -779,7 +850,7 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <h2>Catálogo Completo</h2>
-      <span class="caps" style="color:var(--ink-soft)" id="count">68 criações</span>
+      <span class="caps" style="color:var(--ink-soft)" id="count">69 criações</span>
     </div>
     <div class="filters reveal" role="tablist" aria-label="Filtrar catálogo">
       <button class="chip active" data-filter="todos">Todos</button>
@@ -788,6 +859,7 @@
       <button class="chip" data-filter="orquidea">Orquídeas</button>
       <button class="chip" data-filter="arranjo">Arranjos</button>
       <button class="chip" data-filter="cesta">Cestas do Coração</button>
+      <button class="chip" data-filter="complemento">Complementos</button>
     </div>
     <div class="grid" id="grid"></div>
     <p class="grid-empty" id="empty">Nenhuma criação nesta categoria.</p>
@@ -800,17 +872,11 @@
     <div class="builder-head reveal">
       <span class="caps">Ateliê Walter &amp; Flores</span>
       <h2>Monte seu <em>buquê</em></h2>
-      <p>Escolha haste por haste e veja sua composição ganhar forma. Ao final, envie o pedido pelo WhatsApp e nossos floristas cuidam do resto.</p>
+      <p>Escolha a espécie, a cor e a quantidade de cada haste. Ao final, envie o pedido pelo WhatsApp e nossos floristas montam tudo com carinho.</p>
     </div>
     <div class="builder-body">
       <div class="flower-grid reveal" id="flowerGrid"></div>
       <aside class="stage reveal">
-        <div class="canvas" id="canvas">
-          <div class="canvas-empty" id="canvasEmpty">
-            <svg><use href="#i-flower"/></svg>
-            <p>Seu buquê começa aqui</p>
-          </div>
-        </div>
         <div class="stage-body">
           <h3>Sua composição</h3>
           <ul class="sum" id="sum"></ul>
@@ -821,7 +887,10 @@
             <div class="trow big"><span>Total</span><span class="ttotal" id="tTotal">R$ 0,00</span></div>
           </div>
           <button class="btn-build" id="btnBuild" disabled>
-            <svg><use href="#i-phone"/></svg> Encomendar pelo WhatsApp
+            <svg><use href="#i-whats"/></svg> Conversar no WhatsApp
+          </button>
+          <button class="btn-build" id="btnBuyBuild" disabled style="background:var(--orange);margin-top:9px">
+            <svg><use href="#i-bag"/></svg> Comprar agora
           </button>
           <button class="btn-reset" id="btnReset">Limpar seleção</button>
         </div>
@@ -829,6 +898,39 @@
     </div>
   </div>
 </section>
+
+<!-- ============ MODAL COMPRAR AGORA ============ -->
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button class="modal-x" id="modalX" aria-label="Fechar"><svg><use href="#i-close"/></svg></button>
+    <div class="modal-head">
+      <span class="caps">Confirmar pedido</span>
+      <h3 id="modalTitle">—</h3>
+      <div class="m-price" id="modalPrice"></div>
+    </div>
+    <div class="modal-body">
+      <div class="m-info">
+        <svg><use href="#i-clock"/></svg>
+        <div>
+          <b>Entrega em aproximadamente 3 horas</b>
+          <span>Após a confirmação do pagamento, seu pedido é preparado e entregue em cerca de 3h dentro da nossa área de cobertura.</span>
+        </div>
+      </div>
+      <div class="m-frete">
+        <h4>Valores de entrega por região</h4>
+        <div id="freteList"></div>
+      </div>
+      <div id="mpBox">
+        <p class="m-note" id="mpMsg" style="margin-bottom:12px"></p>
+      </div>
+      <div class="m-actions">
+        <button class="m-pay" id="btnPay"><svg><use href="#i-bag"/></svg> Pagar com Mercado Pago</button>
+        <a class="m-wa" id="btnModalWa" href="#" target="_blank" rel="noopener"><svg><use href="#i-whats"/></svg> Prefiro combinar pelo WhatsApp</a>
+      </div>
+      <p class="m-note">O frete é somado à parte, conforme o bairro de entrega, e confirmado no checkout ou pelo WhatsApp.</p>
+    </div>
+  </div>
+</div>
 
 <!-- ============ FOOTER ============ -->
 <footer id="contato">
@@ -853,7 +955,7 @@
       <div>
         <h5>Contato</h5>
         <ul>
-          <li><a href="tel:+552127917153">(21) 2791-7153</a></li>
+          <li><a href="tel:+5521964527031">(21) 96452-7031</a></li>
           <li><a href="https://walterflores.com.br" target="_blank" rel="noopener">walterflores.com.br</a></li>
         </ul>
       </div>
@@ -1450,7 +1552,7 @@ const PRODUCTS = [
   "n1": "Aurora",
   "n2": "Rubi",
   "desc": "Rosas vermelhas entremeadas de crisântemos brancos, solidago dourado e mosquitinho, em embalagem branca e ouro — um contraste vibrante e luminoso, cheio de vida.",
-  "preco": 0,
+  "preco": 150,
   "cat": "buque"
  },
  {
@@ -1462,7 +1564,7 @@ const PRODUCTS = [
   "n1": "Manhã",
   "n2": "Dourada",
   "desc": "Lírios brancos, gérberas laranja e solidago amarelo em profusão campestre, com trigo e laço dourado — a alegria do campo em tons de sol.",
-  "preco": 0,
+  "preco": 150,
   "cat": "buque"
  },
  {
@@ -1474,7 +1576,7 @@ const PRODUCTS = [
   "n1": "Jardim",
   "n2": "Encantado",
   "desc": "Composição autoral farta com lírio rosa, gérberas, margaridas e flores da estação em tons múltiplos — a assinatura colorida da casa.",
-  "preco": 0,
+  "preco": 350,
   "cat": "buque"
  },
  {
@@ -1486,7 +1588,7 @@ const PRODUCTS = [
   "n1": "Brinde",
   "n2": "Selvagem",
   "desc": "Buquê de rosas vermelhas \"A Você\" acompanhado de urso panda de pelúcia e vinho \"Keep Calm and Drink Wine\" — para brindar o amor com bom humor.",
-  "preco": 0,
+  "preco": 320,
   "cat": "cesta"
  },
  {
@@ -1498,7 +1600,7 @@ const PRODUCTS = [
   "n1": "Céu",
   "n2": "de Nós",
   "desc": "Rosas azuis tingidas com mosquitinho branco e folhagem, em embalagem clara — raras e poéticas, para amores que fogem ao comum.",
-  "preco": 0,
+  "preco": 150,
   "cat": "buque"
  },
  {
@@ -1510,7 +1612,7 @@ const PRODUCTS = [
   "n1": "Sol",
   "n2": "& Lua",
   "desc": "Lírios rosa e girassóis radiantes em embalagem preta e branca — o encontro dramático do dia com a noite.",
-  "preco": 0,
+  "preco": 180,
   "cat": "buque"
  },
  {
@@ -1522,19 +1624,7 @@ const PRODUCTS = [
   "n1": "Serenata",
   "n2": "Branca",
   "desc": "Lírios e cravos brancos com folhagem, em composição monocromática de pureza absoluta — elegância silenciosa para momentos solenes.",
-  "preco": 0,
-  "cat": "buque"
- },
- {
-  "code": "WF · 048",
-  "img": "images/buque-mix-vibrante.jpg",
-  "alt": "Festa das Cores",
-  "ribbon": "Vibrante",
-  "meta": "N. XLVIII · Mix Festivo",
-  "n1": "Festa",
-  "n2": "das Cores",
-  "desc": "Lírio amarelo, rosas, gérberas e alstroemérias em explosão de cor com eucalipto — alegre, generoso e cheio de energia.",
-  "preco": 0,
+  "preco": 170,
   "cat": "buque"
  },
  {
@@ -1546,7 +1636,7 @@ const PRODUCTS = [
   "n1": "Névoa",
   "n2": "Azul",
   "desc": "Hortênsia azul, lírio branco e solidago dourado em composição sofisticada — a serenidade do azul em moldura nobre.",
-  "preco": 0,
+  "preco": 150,
   "cat": "buque"
  },
  {
@@ -1558,7 +1648,7 @@ const PRODUCTS = [
   "n1": "Luar",
   "n2": "de Lírios",
   "desc": "Lírios brancos de hastes longas em buquê monotemático, com etiqueta \"Flores pra você\" — perfumado, sereno e atemporal.",
-  "preco": 0,
+  "preco": 120,
   "cat": "buque"
  },
  {
@@ -1570,7 +1660,7 @@ const PRODUCTS = [
   "n1": "Realeza",
   "n2": "Violeta",
   "desc": "Lírios brancos, lisianthus roxo e hortênsia branca com mosquitinho — uma composição régia em roxo e branco.",
-  "preco": 0,
+  "preco": 350,
   "cat": "buque"
  },
  {
@@ -1582,7 +1672,7 @@ const PRODUCTS = [
   "n1": "Brasa",
   "n2": "Solar",
   "desc": "Lírios e gérberas laranja em buquê monocromático quente, com mosquitinho e folhagem — o calor do entardecer em flores.",
-  "preco": 0,
+  "preco": 380,
   "cat": "buque"
  },
  {
@@ -1594,7 +1684,7 @@ const PRODUCTS = [
   "n1": "Orquídea",
   "n2": "Nácar",
   "desc": "Phalaenopsis branca de haste curva em vaso embalado em branco e ouro — a elegância silenciosa em sua forma mais pura.",
-  "preco": 0,
+  "preco": 220,
   "cat": "orquidea"
  },
  {
@@ -1606,7 +1696,7 @@ const PRODUCTS = [
   "n1": "Doce",
   "n2": "Aurora",
   "desc": "Lírios rosa e statice roxo com mosquitinho e folhagem — suave, perfumado e profundamente romântico.",
-  "preco": 0,
+  "preco": 425,
   "cat": "buque"
  },
  {
@@ -1618,7 +1708,7 @@ const PRODUCTS = [
   "n1": "Rubor",
   "n2": "Rosado",
   "desc": "Rosas cor-de-rosa e alstroemérias com mosquitinho, em embalagem branca e kraft — delicadeza e romance em camadas.",
-  "preco": 0,
+  "preco": 180,
   "cat": "buque"
  },
  {
@@ -1630,7 +1720,7 @@ const PRODUCTS = [
   "n1": "Champagne",
   "n2": "Ardente",
   "desc": "Rosas champagne de botões generosos com alstroemérias vermelhas e eucalipto, em papel dourado — sofisticação em tom pastel.",
-  "preco": 0,
+  "preco": 180,
   "cat": "buque"
  },
  {
@@ -1642,7 +1732,7 @@ const PRODUCTS = [
   "n1": "Paixão",
   "n2": "do Campo",
   "desc": "Rosas vermelhas e alstroemérias vermelhas com mosquitinho e folhagem — a paixão em versão campestre e calorosa.",
-  "preco": 0,
+  "preco": 180,
   "cat": "buque"
  },
  {
@@ -1654,7 +1744,7 @@ const PRODUCTS = [
   "n1": "Grande",
   "n2": "Amor",
   "desc": "Buquê generoso composto só de rosas vermelhas, com laço dourado — a declaração clássica em grande escala.",
-  "preco": 0,
+  "preco": 735,
   "cat": "buque"
  },
  {
@@ -1666,7 +1756,7 @@ const PRODUCTS = [
   "n1": "Primavera",
   "n2": "Solar",
   "desc": "Lírios amarelos, rosas coral, alstroemérias e crisântemos verdes — um buquê primaveril fresco e luminoso.",
-  "preco": 0,
+  "preco": 215,
   "cat": "buque"
  },
  {
@@ -1678,7 +1768,7 @@ const PRODUCTS = [
   "n1": "Coração",
   "n2": "de Rubi",
   "desc": "Rosas vermelhas dispostas em formato de coração, emolduradas por folhagem verde e solidago dourado, com laço de cetim — uma declaração de amor em sua forma mais simbólica.",
-  "preco": 0,
+  "preco": 320,
   "cat": "buque"
  },
  {
@@ -1690,24 +1780,49 @@ const PRODUCTS = [
   "n1": "Doçura",
   "n2": "Serena",
   "desc": "Box com tulipas e alstroemérias rosa, mosquitinho e eucalipto, acompanhado de urso de pelúcia creme e Ferrero Rocher — ternura e delicadeza em um presente completo.",
-  "preco": 0,
+  "preco": 315,
   "cat": "cesta"
+ },
+ {
+  "code": "WF · 062",
+  "img": "images/buque-girassois-rosas.jpg",
+  "alt": "Sol & Paixão",
+  "ribbon": "Assinatura",
+  "meta": "N. LXII · Girassóis & Rosas",
+  "n1": "Sol",
+  "n2": "& Paixão",
+  "desc": "Quatro girassóis radiantes e seis rosas vermelhas com solidago e mosquitinho — o encontro caloroso do sol com a paixão, em buquê generoso.",
+  "preco": 250,
+  "cat": "buque"
+ },
+ {
+  "code": "WF · 063",
+  "img": "images/chuva-de-prata-maco.jpg",
+  "alt": "Chuva de Prata",
+  "ribbon": "Complemento",
+  "meta": "N. LXIII · Maço",
+  "n1": "Chuva",
+  "n2": "de Prata",
+  "desc": "Maço de mosquitinho (gypsophila) branco, delicado e etéreo — perfeito para compor arranjos ou presentear com leveza. Vendido por maço.",
+  "preco": 20,
+  "cat": "complemento"
  }
 ];
 
 /* Telefone para encomendas (WhatsApp) — altere aqui se necessário */
-const PHONE = '552127917153';
+const PHONE = '5521964527031';
 
 /* Preço da embalagem do buquê montado — altere aqui */
 const WRAP_PRICE = 35;
 
 /* ============ RENDER DO CATÁLOGO ============ */
-const CATS = {mv:'Mais Vendidos', buque:'Buquês', orquidea:'Orquídeas', arranjo:'Arranjos', cesta:'Cestas do Coração'};
+const CATS = {mv:'Mais Vendidos', buque:'Buquês', orquidea:'Orquídeas', arranjo:'Arranjos', cesta:'Cestas do Coração', complemento:'Complementos'};
 const grid = document.getElementById('grid');
 const empty = document.getElementById('empty');
 const count = document.getElementById('count');
 
 const brl = n => n.toLocaleString('pt-BR',{minimumFractionDigits:2, maximumFractionDigits:2});
+const H = s => String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
 /* imagens ainda não enviadas → placeholder elegante */
 const MISSING = new Set([]);
@@ -1731,9 +1846,14 @@ function cardHTML(p, i){
       <p class="desc" contenteditable="true" spellcheck="false">${p.desc}</p>
       <div class="card-foot">
         <div class="price"><span class="cur">R$</span><span class="val">${val}</span><span class="cts">,00</span></div>
-        <a class="order" href="https://wa.me/${PHONE}?text=${msg}" target="_blank" rel="noopener">
-          <svg><use href="#i-phone"/></svg> Encomendar
+      </div>
+      <div class="card-actions">
+        <a class="btn-wa" href="https://wa.me/${PHONE}?text=${msg}" target="_blank" rel="noopener">
+          <svg><use href="#i-whats"/></svg> Conversar no WhatsApp
         </a>
+        <button class="btn-buy" data-buy="${p.code}" data-nome="${H(p.n1+' '+p.n2)}" data-preco="${p.preco}">
+          <svg><use href="#i-bag"/></svg> Comprar agora
+        </button>
       </div>
     </div>
   </article>`;
@@ -1770,36 +1890,79 @@ document.querySelectorAll('[data-filter-link]').forEach(el=>{
 });
 
 /* ============ MONTE SEU BUQUÊ ============ */
-/* Preço por haste — ajuste os valores livremente */
-const FLOWERS = [
-  {id:'rosa-verm-nac',   name:'Rosa Vermelha Nacional',   latin:'Rosa × hybrida',           color:'#B01818', price:0, img:'images/flores/flor-rosa-vermelha-nacional.jpg'},
-  {id:'rosa-verm-col',   name:'Rosa Vermelha Colombiana', latin:'Rosa × hybrida',           color:'#8B1010', price:0, img:'images/flores/flor-rosa-vermelha-colombiana.jpg'},
-  {id:'rosa-pink',       name:'Rosa Pink',                latin:'Rosa × hybrida',           color:'#D06A96', price:0, img:'images/flores/flor-rosa-pink.jpg'},
-  {id:'rosa-pessego',    name:'Rosa Pêssego',             latin:'Rosa × hybrida',           color:'#E6A96B', price:0, img:'images/flores/flor-rosa-pessego.jpg'},
-  {id:'lirio-amarelo',   name:'Lírio Amarelo',            latin:'Lilium asiaticum',         color:'#EBC013', price:0, img:'images/flores/flor-lirio-amarelo.jpg'},
-  {id:'lirio-laranja',   name:'Lírio Laranja',            latin:'Lilium asiaticum',         color:'#E8722A', price:0, img:'images/flores/flor-lirio-laranja.jpg'},
-  {id:'girassol',        name:'Girassol',                 latin:'Helianthus annuus',        color:'#E8A200', price:0, img:'images/flores/flor-girassol.jpg'},
-  {id:'cravo-vermelho',  name:'Cravo Vermelho',           latin:'Dianthus caryophyllus',    color:'#CE1F2A', price:0, img:'images/flores/flor-cravo-vermelho.jpg'},
-  {id:'gerbera-branca',  name:'Gérbera Branca',           latin:'Gerbera jamesonii',        color:'#E8E0D0', price:0, img:'images/flores/flor-gerbera-branca.jpg'},
-  {id:'gerbera-amarela', name:'Gérbera Amarela',          latin:'Gerbera jamesonii',        color:'#F2C009', price:0, img:'images/flores/flor-gerbera-amarela.jpg'},
-  {id:'gerbera-laranja', name:'Gérbera Laranja',          latin:'Gerbera jamesonii',        color:'#E86A1E', price:0, img:'images/flores/flor-gerbera-laranja.jpg'},
-  {id:'lisi-branco',     name:'Lisianthus Branco',        latin:'Eustoma grandiflorum',     color:'#EAE6DA', price:0, img:'images/flores/flor-lisianthus-branco.jpg'},
-  {id:'lisi-rosa',       name:'Lisianthus Rosa',          latin:'Eustoma grandiflorum',     color:'#D683A6', price:0, img:'images/flores/flor-lisianthus-rosa.jpg'},
-  {id:'cris-branco',     name:'Crisântemo Branco',        latin:'Chrysanthemum morifolium', color:'#EDE8DC', price:0, img:'images/flores/flor-crisantemo-branco.jpg'},
-  {id:'cris-amarelo',    name:'Crisântemo Amarelo',       latin:'Chrysanthemum morifolium', color:'#EDC211', price:0, img:'images/flores/flor-crisantemo-amarelo.jpg'},
-  {id:'cris-azul',       name:'Crisântemo Azul',          latin:'Chrysanthemum morifolium', color:'#4FB4D8', price:0, img:'images/flores/flor-crisantemo-azul.jpg'},
-  {id:'cris-rosa-malh',  name:'Crisântemo Rosa Malhado',  latin:'Chrysanthemum morifolium', color:'#E86A8C', price:0, img:'images/flores/flor-crisantemo-rosa-malhado.jpg'},
-  {id:'cris-rosa-pink',  name:'Crisântemo Rosa Pink',     latin:'Chrysanthemum morifolium', color:'#D45FA0', price:0, img:'images/flores/flor-crisantemo-rosa-pink.jpg'},
-  {id:'margarida-branca',name:'Margarida Branca',         latin:'Leucanthemum vulgare',     color:'#F0EBDF', price:0, img:'images/flores/flor-margarida-branca.jpg'},
-  {id:'margarida-amarela',name:'Margarida Amarela',       latin:'Glebionis segetum',        color:'#F0C50D', price:0, img:'images/flores/flor-margarida-amarela.jpg'}
+/* Espécies com variações de cor. Ajuste preços/cores livremente. */
+const SPECIES = [
+  {id:'rosa', name:'Rosa', latin:'Rosa × hybrida', cores:[
+    {cor:'Vermelha Nacional', hex:'#B01818', price:8, img:'images/flores/flor-rosa-vermelha-nacional.jpg'},
+    {cor:'Vermelha Colombiana', hex:'#8B1010', price:35, img:'images/flores/flor-rosa-vermelha-colombiana.jpg'},
+    {cor:'Pink', hex:'#D06A96', price:8, img:'images/flores/flor-rosa-pink.jpg'},
+    {cor:'Pêssego', hex:'#E6A96B', price:8, img:'images/flores/flor-rosa-pessego.jpg'},
+    {cor:'Branca', hex:'#F2ECE2', price:8, img:null},
+    {cor:'Amarela', hex:'#F0C40D', price:8, img:null},
+    {cor:'Azul', hex:'#2F6BD8', price:8, img:null},
+    {cor:'Laranja', hex:'#E8722A', price:8, img:null}
+  ]},
+  {id:'lirio', name:'Lírio', latin:'Lilium asiaticum', cores:[
+    {cor:'Amarelo', hex:'#EBC013', price:35, img:'images/flores/flor-lirio-amarelo.jpg'},
+    {cor:'Laranja', hex:'#E8722A', price:35, img:'images/flores/flor-lirio-laranja.jpg'},
+    {cor:'Branco', hex:'#F2ECE2', price:35, img:null},
+    {cor:'Rosa', hex:'#D683A6', price:35, img:null},
+    {cor:'Vermelho', hex:'#C01D1D', price:35, img:null}
+  ]},
+  {id:'girassol', name:'Girassol', latin:'Helianthus annuus', cores:[
+    {cor:'Amarelo', hex:'#E8A200', price:10, img:'images/flores/flor-girassol.jpg'}
+  ]},
+  {id:'cravo', name:'Cravo', latin:'Dianthus caryophyllus', cores:[
+    {cor:'Vermelho', hex:'#CE1F2A', price:10, img:'images/flores/flor-cravo-vermelho.jpg'},
+    {cor:'Branco', hex:'#F2ECE2', price:10, img:null},
+    {cor:'Rosa', hex:'#D683A6', price:10, img:null},
+    {cor:'Amarelo', hex:'#F0C40D', price:10, img:null}
+  ]},
+  {id:'gerbera', name:'Gérbera', latin:'Gerbera jamesonii', cores:[
+    {cor:'Branca', hex:'#E8E0D0', price:8, img:'images/flores/flor-gerbera-branca.jpg'},
+    {cor:'Amarela', hex:'#F2C009', price:8, img:'images/flores/flor-gerbera-amarela.jpg'},
+    {cor:'Laranja', hex:'#E86A1E', price:8, img:'images/flores/flor-gerbera-laranja.jpg'},
+    {cor:'Vermelha', hex:'#C01D1D', price:8, img:null},
+    {cor:'Rosa', hex:'#D06A96', price:8, img:null}
+  ]},
+  {id:'lisianthus', name:'Lisianthus', latin:'Eustoma grandiflorum', cores:[
+    {cor:'Branco', hex:'#EAE6DA', price:15, img:'images/flores/flor-lisianthus-branco.jpg'},
+    {cor:'Rosa', hex:'#D683A6', price:15, img:'images/flores/flor-lisianthus-rosa.jpg'},
+    {cor:'Roxo', hex:'#7B4DA6', price:15, img:null},
+    {cor:'Azul', hex:'#4A6FC9', price:15, img:null}
+  ]},
+  {id:'crisantemo', name:'Crisântemo', latin:'Chrysanthemum morifolium', cores:[
+    {cor:'Branco', hex:'#EDE8DC', price:8, img:'images/flores/flor-crisantemo-branco.jpg'},
+    {cor:'Amarelo', hex:'#EDC211', price:8, img:'images/flores/flor-crisantemo-amarelo.jpg'},
+    {cor:'Azul', hex:'#4FB4D8', price:8, img:'images/flores/flor-crisantemo-azul.jpg'},
+    {cor:'Rosa Malhado', hex:'#E86A8C', price:8, img:'images/flores/flor-crisantemo-rosa-malhado.jpg'},
+    {cor:'Rosa Pink', hex:'#D45FA0', price:8, img:'images/flores/flor-crisantemo-rosa-pink.jpg'},
+    {cor:'Vermelho', hex:'#C01D1D', price:8, img:null},
+    {cor:'Laranja', hex:'#E86A1E', price:8, img:null},
+    {cor:'Roxo', hex:'#7B4DA6', price:8, img:null}
+  ]},
+  {id:'margarida', name:'Margarida', latin:'Leucanthemum vulgare', cores:[
+    {cor:'Branca', hex:'#F0EBDF', price:8, img:'images/flores/flor-margarida-branca.jpg'},
+    {cor:'Amarela', hex:'#F0C50D', price:8, img:'images/flores/flor-margarida-amarela.jpg'},
+    {cor:'Rosa', hex:'#D683A6', price:8, img:null},
+    {cor:'Laranja', hex:'#E86A1E', price:8, img:null}
+  ]},
+  {id:'tango', name:'Tango', latin:'Solidago canadensis', cores:[
+    {cor:'Amarelo', hex:'#C4B217', price:10, img:'images/flores/flor-tango.jpg'}
+  ]},
+  {id:'palma', name:'Palma', latin:'Gladiolus', cores:[
+    {cor:'Rosa', hex:'#E087A8', price:10, img:'images/flores/flor-palma.jpg'}
+  ]},
+  {id:'chuva-prata', name:'Chuva de Prata', latin:'Gypsophila', cores:[
+    {cor:'Branca', hex:'#F4F1EA', price:8, img:'images/flores/flor-chuva-prata.jpg'}
+  ]}
 ];
 
+/* estado: para cada espécie, cor selecionada + quantidade */
 const state = {};
-FLOWERS.forEach(f => state[f.id] = 0);
+SPECIES.forEach(s => state[s.id] = {sel:0, qty:0});
 
 const fgrid   = document.getElementById('flowerGrid');
-const canvas  = document.getElementById('canvas');
-const cEmpty  = document.getElementById('canvasEmpty');
 const sumEl   = document.getElementById('sum');
 const sumHint = document.getElementById('sumHint');
 const tStems  = document.getElementById('tStems');
@@ -1807,78 +1970,93 @@ const tWrap   = document.getElementById('tWrap');
 const tTotal  = document.getElementById('tTotal');
 const btnBuild= document.getElementById('btnBuild');
 
-fgrid.innerHTML = FLOWERS.map(f=>`
-  <article class="tile" id="tile-${f.id}">
-    <span class="tile-badge" id="badge-${f.id}">0</span>
-    <div class="tile-img"><img src="${f.img}" alt="${f.name}" loading="lazy"></div>
+/* HTML da área de imagem: foto real ou aviso "sem foto" */
+function imgArea(s, c){
+  if(c.img){
+    return `<img id="img-${s.id}" src="${c.img}" alt="${s.name} ${c.cor}" loading="lazy">`;
+  }
+  return `<div id="img-${s.id}" class="tile-noimg">
+    <svg><use href="#i-flower"/></svg>
+    <span>Sem foto para<br>visualização</span>
+  </div>`;
+}
+
+/* monta os cards (um por espécie) */
+fgrid.innerHTML = SPECIES.map(s=>{
+  const c0 = s.cores[0];
+  const multi = s.cores.length > 1;
+  const swatches = multi ? `
+    <div class="tile-colors" role="group" aria-label="Escolha a cor de ${s.name}">
+      ${s.cores.map((c,i)=>`
+        <button class="swatch${i===0?' on':''}${c.img?'':' noimg'}" data-sp="${s.id}" data-ci="${i}"
+                style="--sw:${c.hex}" title="${c.cor}${c.img?'':' (sem foto)'}" aria-label="${c.cor}"></button>`).join('')}
+    </div>` : '';
+  return `
+  <article class="tile" id="tile-${s.id}">
+    <span class="tile-badge" id="badge-${s.id}">0</span>
+    <div class="tile-img" id="imgwrap-${s.id}">${imgArea(s, c0)}</div>
     <div class="tile-info">
-      <div class="tile-name">${f.name}</div>
-      <div class="tile-latin">${f.latin}</div>
-      <div class="tile-price">${f.price>0 ? 'R$ '+brl(f.price)+' / haste' : 'preço a definir'}</div>
+      <div class="tile-name">${s.name}</div>
+      <div class="tile-latin">${s.latin}</div>
+      <div class="tile-color-name" id="cn-${s.id}">${c0.cor}</div>
+      ${swatches}
+      <div class="tile-price" id="tp-${s.id}">R$ ${brl(c0.price)} / ${s.unit||'haste'}</div>
     </div>
     <div class="tile-ctl">
-      <button class="tbtn" data-act="-1" data-id="${f.id}" aria-label="Remover ${f.name}" disabled>&#8722;</button>
-      <span class="tcount" id="count-${f.id}">0</span>
-      <button class="tbtn" data-act="1" data-id="${f.id}" aria-label="Adicionar ${f.name}">+</button>
+      <button class="tbtn" data-act="-1" data-sp="${s.id}" aria-label="Remover ${s.name}" disabled>&#8722;</button>
+      <span class="tcount" id="count-${s.id}">0</span>
+      <button class="tbtn" data-act="1" data-sp="${s.id}" aria-label="Adicionar ${s.name}">+</button>
     </div>
-  </article>`).join('');
+  </article>`;
+}).join('');
 
+/* clique: trocar cor (swatch) ou +/- quantidade */
 fgrid.addEventListener('click', e=>{
+  const sw = e.target.closest('.swatch');
+  if(sw){
+    const sp = sw.dataset.sp, ci = Number(sw.dataset.ci);
+    state[sp].sel = ci;
+    const s = SPECIES.find(x=>x.id===sp), c = s.cores[ci];
+    document.getElementById('imgwrap-'+sp).innerHTML = imgArea(s, c);
+    document.getElementById('cn-'+sp).textContent = c.cor;
+    document.getElementById('tp-'+sp).textContent = 'R$ '+brl(c.price)+' / '+(s.unit||'haste');
+    document.querySelectorAll(`.swatch[data-sp="${sp}"]`).forEach((b,i)=>b.classList.toggle('on', i===ci));
+    refresh();
+    return;
+  }
   const b = e.target.closest('.tbtn');
   if(!b) return;
-  state[b.dataset.id] = Math.max(0, state[b.dataset.id] + Number(b.dataset.act));
+  const sp = b.dataset.sp;
+  state[sp].qty = Math.max(0, state[sp].qty + Number(b.dataset.act));
   refresh();
 });
 
 document.getElementById('btnReset').addEventListener('click', ()=>{
-  FLOWERS.forEach(f => state[f.id] = 0);
+  SPECIES.forEach(s => { state[s.id].qty = 0; });
   refresh();
 });
 
-/* distribuição em espiral de Fermat — as hastes se acomodam naturalmente */
-function renderCanvas(list){
-  canvas.querySelectorAll('.stem').forEach(s=>s.remove());
-  cEmpty.style.opacity = list.length ? 0 : 1;
-  const w = canvas.clientWidth, h = canvas.clientHeight;
-  const cx = w/2, cy = h/2;
-  const size = Math.max(15, Math.min(34, 130/Math.sqrt(list.length||1)));
-  const spread = Math.min(w,h)*0.42;
-  list.forEach((f,i)=>{
-    const t = i/Math.max(1,list.length-1||1);
-    const ang = i*2.399963;
-    const rad = spread*Math.sqrt(list.length>1 ? t : 0);
-    const el = document.createElement('span');
-    el.className = 'stem';
-    el.style.cssText = `width:${size}px;height:${size}px;background:${f.color};
-      left:${cx + Math.cos(ang)*rad - size/2}px; top:${cy + Math.sin(ang)*rad - size/2}px;
-      animation-delay:${Math.min(i*22,600)}ms; z-index:${i}`;
-    canvas.appendChild(el);
-  });
-}
-
 function refresh(){
-  const list = [];
   let stems = 0, subtotal = 0;
-  FLOWERS.forEach(f=>{
-    const n = state[f.id];
-    document.getElementById('count-'+f.id).textContent = n;
-    document.getElementById('badge-'+f.id).textContent = n;
-    const tile = document.getElementById('tile-'+f.id);
-    tile.classList.toggle('on', n>0);
-    tile.querySelector('[data-act="-1"]').disabled = n===0;
-    for(let i=0;i<n;i++) list.push(f);
-    stems += n;
-    subtotal += n*f.price;
+  const chosen = [];
+  SPECIES.forEach(s=>{
+    const st = state[s.id];
+    const c = s.cores[st.sel];
+    document.getElementById('count-'+s.id).textContent = st.qty;
+    document.getElementById('badge-'+s.id).textContent = st.qty;
+    const tile = document.getElementById('tile-'+s.id);
+    tile.classList.toggle('on', st.qty>0);
+    tile.querySelector('[data-act="-1"]').disabled = st.qty===0;
+    stems += st.qty;
+    subtotal += st.qty * c.price;
+    if(st.qty>0) chosen.push({name:s.name+(s.cores.length>1?' '+c.cor:''), hex:c.hex, qty:st.qty, price:c.price});
   });
 
-  renderCanvas(list);
-
-  const chosen = FLOWERS.filter(f=>state[f.id]>0);
   sumEl.innerHTML = chosen.map(f=>`
-    <li><span class="dot" style="background:${f.color}"></span>
+    <li><span class="dot" style="background:${f.hex}"></span>
       <span class="nm">${f.name}</span>
-      <span class="qt">×${state[f.id]}</span>
-      <span class="pr">R$ ${brl(state[f.id]*f.price)}</span></li>`).join('');
+      <span class="qt">×${f.qty}</span>
+      <span class="pr">R$ ${brl(f.qty*f.price)}</span></li>`).join('');
   sumHint.style.display = chosen.length ? 'none' : 'block';
 
   const wrap = stems ? WRAP_PRICE : 0;
@@ -1886,24 +2064,124 @@ function refresh(){
   tWrap.textContent = 'R$ ' + brl(wrap);
   tTotal.textContent = 'R$ ' + brl(subtotal + wrap);
   btnBuild.disabled = stems === 0;
+  document.getElementById('btnBuyBuild').disabled = stems === 0;
   btnBuild.dataset.total = subtotal + wrap;
+  window._chosen = chosen;
 }
 
 btnBuild.addEventListener('click', ()=>{
-  const linhas = FLOWERS.filter(f=>state[f.id]>0)
-    .map(f=>`• ${f.name} × ${state[f.id]} — R$ ${brl(state[f.id]*f.price)}`).join('\n');
+  const linhas = (window._chosen||[]).map(f=>`• ${f.name} × ${f.qty} — R$ ${brl(f.qty*f.price)}`).join('\n');
   const msg = `Olá! Montei meu buquê no site 🌸\n\n${linhas}\n\nEmbalagem e laço: R$ ${brl(WRAP_PRICE)}\nTotal: R$ ${brl(Number(btnBuild.dataset.total))}\n\nGostaria de encomendar!`;
   window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 });
 
 refresh();
-addEventListener('resize', ()=>refresh());
 
 /* ============ REVEAL ON SCROLL ============ */
 const io = new IntersectionObserver(entries=>{
   entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
 },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ============ MODAL COMPRAR AGORA ============ */
+/* Tabela de frete por região */
+const FRETE = [
+  {v:10, r:'Deodoro', b:'Deodoro (Centro/Estação), Vila Militar, Magalhães Bastos, Camboatá'},
+  {v:15, r:'Nilópolis', b:'Centro, Olinda, Manoel Reis, Cabral, Nova Cidade, Frigorífico, N. Sra. de Fátima, Santos Dumont, Paiol de Pólvora, Cabuís, Novo Horizonte'},
+  {v:20, r:'Mesquita', b:'Centro, Vila Emil, Cosmorama, Edson Passos, Chatuba, Rocha Sobrinho, Banco de Areia, Cruzeiro do Sul, Bela Vista, Jacutinga, Santa Terezinha, Santo Elias, Vila Norma, Coreia/BNH'},
+  {v:25, r:'Anchieta & Centro de Nova Iguaçu', b:'Anchieta: Centro, Mariópolis, Parque Anchieta. Nova Iguaçu: Centro, KM 32, Califórnia, Luz, Caonze, Moquetá, Rancho Novo, Viga, Chacrinha, Santa Eugênia, Jardim Iguaçu'},
+  {v:30, r:'Ricardo/Juscelino, Belford Roxo e S. J. de Meriti', b:'Ricardo/Juscelino: Jd. Continental, Vila Centenária, Vila Operária, Centro, Três Campos. Belford Roxo (confirmar): Centro, Vila Dagmar, Areia Branca, Heliópolis, Piam, Bairro das Graças, São Bernardo. S. J. Meriti: Centro, Vilar dos Teles, Agostinho Porto, Vila Rosali, Éden, Grande Rio'},
+  {v:60, r:'Centro de Duque de Caxias', b:'Centro, Jardim 25 de Agosto, Vila Meriti, Parque Lafaiete, Barreto, Periquitos'}
+];
+
+/* ==========================================================
+   INTEGRAÇÃO MERCADO PAGO — link + QR automáticos
+   ----------------------------------------------------------
+   Para ativar o pagamento real, é preciso um endpoint backend
+   (ex.: função serverless no Vercel em /api/criar-pagamento)
+   que use o ACCESS TOKEN do Mercado Pago do lojista com
+   segurança (a chave NUNCA fica aqui no navegador).
+   Quando o backend existir, defina abaixo a URL dele:
+   ========================================================== */
+const MP_ENDPOINT = ''; // ex.: '/api/criar-pagamento'  (vazio = ainda não configurado)
+
+const modalBg = document.getElementById('modalBg');
+const freteList = document.getElementById('freteList');
+freteList.innerHTML = FRETE.map(f=>`
+  <div class="frete-row">
+    <span class="fv">R$ ${f.v},00</span>
+    <span class="fr"><b>${f.r}</b><span>${f.b}</span></span>
+  </div>`).join('');
+
+let pedidoAtual = null;
+
+function abrirModal(nome, preco, waText){
+  pedidoAtual = {nome, preco, waText};
+  document.getElementById('modalTitle').textContent = nome;
+  document.getElementById('modalPrice').textContent = preco>0 ? 'R$ '+brl(preco) : 'Valor a combinar';
+  document.getElementById('btnModalWa').href = `https://wa.me/${PHONE}?text=${encodeURIComponent(waText)}`;
+  document.getElementById('mpBox').classList.remove('show');
+  document.getElementById('mpMsg').textContent = '';
+  modalBg.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function fecharModal(){
+  modalBg.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modalX').addEventListener('click', fecharModal);
+modalBg.addEventListener('click', e=>{ if(e.target===modalBg) fecharModal(); });
+addEventListener('keydown', e=>{ if(e.key==='Escape' && modalBg.classList.contains('open')) fecharModal(); });
+
+/* Botão "Comprar agora" dos cards de produto */
+document.getElementById('grid').addEventListener('click', e=>{
+  const b = e.target.closest('.btn-buy');
+  if(!b) return;
+  const nome = b.dataset.nome, preco = Number(b.dataset.preco), code = b.dataset.buy;
+  abrirModal(nome, preco, `Olá! Quero comprar: ${nome} (${code})${preco>0?' — R$ '+brl(preco):''} 🌸`);
+});
+
+/* Botão "Comprar agora" do builder */
+document.getElementById('btnBuyBuild').addEventListener('click', ()=>{
+  const linhas = (window._chosen||[]).map(f=>`• ${f.name} × ${f.qty} — R$ ${brl(f.qty*f.price)}`).join('\n');
+  const total = Number(btnBuild.dataset.total||0);
+  abrirModal('Buquê personalizado', total,
+    `Olá! Montei meu buquê no site 🌸\n\n${linhas}\n\nEmbalagem e laço: R$ ${brl(WRAP_PRICE)}\nTotal: R$ ${brl(total)}\n\nQuero comprar!`);
+});
+
+/* Botão "Pagar com Mercado Pago" dentro do modal */
+document.getElementById('btnPay').addEventListener('click', async ()=>{
+  const box = document.getElementById('mpBox');
+  const msg = document.getElementById('mpMsg');
+  box.classList.add('show');
+
+  if(!MP_ENDPOINT){
+    msg.innerHTML = 'O pagamento online está sendo configurado. Por enquanto, finalize seu pedido pelo WhatsApp — respondemos na hora e enviamos o link de pagamento do Mercado Pago. 🌸';
+    return;
+  }
+
+  /* Quando o backend estiver pronto, ele deve receber o pedido e
+     retornar { init_point, qr_code_base64 } gerados pelo Mercado Pago. */
+  msg.textContent = 'Gerando seu pagamento...';
+  try{
+    const resp = await fetch(MP_ENDPOINT, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ titulo: pedidoAtual.nome, valor: pedidoAtual.preco })
+    });
+    const data = await resp.json();
+    let html = '';
+    if(data.qr_code_base64){
+      html += `<img src="data:image/png;base64,${data.qr_code_base64}" alt="QR Code Pix/Mercado Pago" width="180" height="180">`;
+      html += `<p class="m-note" style="margin-top:10px">Escaneie o QR code para pagar</p>`;
+    }
+    if(data.init_point){
+      html += `<a class="m-pay" style="margin-top:12px;text-decoration:none" href="${data.init_point}" target="_blank" rel="noopener">Abrir página de pagamento</a>`;
+    }
+    msg.innerHTML = html || 'Não foi possível gerar o pagamento. Tente pelo WhatsApp.';
+  }catch(err){
+    msg.textContent = 'Erro ao gerar o pagamento. Por favor, finalize pelo WhatsApp.';
+  }
+});
 
 /* ============ HEADER SHADOW ============ */
 const hdr = document.querySelector('header.site');
