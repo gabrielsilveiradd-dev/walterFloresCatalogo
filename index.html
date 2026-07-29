@@ -729,6 +729,83 @@
     .badge b{font-size:10px}
     .badge span{font-size:11px}
   }
+
+  /* ============ MOBILE ============ */
+
+  /* Cabeçalho: a marca e o telefone não cabem lado a lado em telas estreitas.
+     Abaixo de 560px o telefone vira um botão redondo só com o ícone — sem ele
+     a página inteira ganhava rolagem horizontal. */
+  @media (max-width:820px){
+    .nav{padding:15px clamp(14px,4vw,28px);gap:12px}
+    .logo{min-width:0}
+    .logo .name{font-size:23px}
+    .logo svg{width:19px;height:19px}
+    .nav-cta{padding:10px 15px;font-size:11px;letter-spacing:.1em}
+  }
+  @media (max-width:560px){
+    .nav-cta{width:44px;height:44px;padding:0;gap:0;justify-content:center;border-radius:50%}
+    .nav-cta .nav-cta-txt{display:none}
+    .nav-cta svg{width:18px;height:18px}
+    .logo .name{font-size:21px}
+    .hero-seal{width:76px;height:76px;top:22px}
+  }
+
+  /* Alvos de toque: no dedo, nada abaixo de ~44px é confiável. */
+  /* Rótulo curto nos botões do card enquanto a grade não der largura ao longo:
+     3 colunas (tablet) e 2 colunas (celular) deixam o card estreito demais. */
+  .lbl-curto{display:none}
+  @media (max-width:1000px){
+    .lbl-full{display:none}
+    .lbl-curto{display:inline}
+  }
+  @media (max-width:640px){
+    .btn-buy,.btn-wa{min-height:44px;font-size:10.5px;letter-spacing:.08em;padding:11px 10px;gap:7px}
+    .chip{padding:11px 17px}
+    .modal-x{width:42px;height:42px;top:12px;right:12px}
+    .modal-x svg{width:17px;height:17px}
+    .btn-reset{min-height:44px}
+    .sec-link{padding:10px 0}
+    .retomar .x{width:40px;height:40px}
+  }
+  /* Controles do "Monte seu buquê": 26px e 19px são pequenos demais para o dedo.
+     Vale por largura (celular) e por ponteiro grosso (tablet em paisagem). */
+  @media (max-width:640px), (hover:none){
+    .tbtn{width:38px;height:38px;font-size:19px}
+    .tcount{font-size:19px;min-width:28px}
+    .tile-ctl{padding:9px 11px}
+    .swatch{width:30px;height:30px}
+    .tile-colors{gap:8px}
+  }
+
+  /* Modal de compra */
+  @media (max-width:560px){
+    .modal-bg{padding:12px}
+    .modal{max-height:94vh}
+    .modal-head{padding:22px 20px 18px}
+    .modal-head h3{font-size:21px}
+    .modal-body{padding:20px 18px 24px}
+    .m-info{padding:12px}
+    .m-row{gap:8px}
+    .m-tbig span:last-child{font-size:21px}
+    .m-ask{padding:12px 13px}
+    .m-ask b{font-size:14px}
+    .m-switch{width:51px;height:30px}
+    .m-switch i::after{width:24px;height:24px}
+    .m-switch input:checked + i::after{transform:translateX(21px)}
+    .fx-step{padding:13px 14px}
+    .fx-head b{font-size:15px}
+    .m-pay,.m-wa{padding:15px 12px;font-size:11px;letter-spacing:.1em}
+  }
+  /* Campos com fonte < 16px fazem o iOS dar zoom sozinho ao receber o toque. */
+  @media (max-width:640px){
+    .m-input{font-size:16px}
+  }
+  /* Telas bem estreitas: rua e número deixam de dividir a linha. */
+  @media (max-width:390px){
+    .m-row{flex-direction:column;gap:0}
+    .modal-head h3{font-size:19px}
+    .fx-ref{flex-direction:column;align-items:flex-start;gap:3px}
+  }
 </style>
 </head>
 <body>
@@ -805,9 +882,9 @@
       <a href="#ocasioes">Ocasiões</a>
       <a href="#contato">Contato</a>
     </nav>
-    <a class="nav-cta" href="tel:+5521964527031">
+    <a class="nav-cta" href="tel:+5521964527031" aria-label="Ligar para (21) 96452-7031">
       <svg><use href="#i-phone"/></svg>
-      (21) 96452-7031
+      <span class="nav-cta-txt">(21) 96452-7031</span>
     </a>
   </div>
 </header>
@@ -2039,10 +2116,12 @@ function cardHTML(p, i){
       </div>
       <div class="card-actions">
         <a class="btn-wa" href="https://wa.me/${PHONE}?text=${msg}" target="_blank" rel="noopener">
-          <svg><use href="#i-whats"/></svg> Conversar no WhatsApp
+          <svg><use href="#i-whats"/></svg>
+          <span class="lbl-full">Conversar no WhatsApp</span><span class="lbl-curto">WhatsApp</span>
         </a>
         <button class="btn-buy" data-buy="${p.code}" data-nome="${H(p.n1+' '+p.n2)}" data-preco="${p.preco}">
-          <svg><use href="#i-bag"/></svg> Comprar agora
+          <svg><use href="#i-bag"/></svg>
+          <span class="lbl-full">Comprar agora</span><span class="lbl-curto">Comprar</span>
         </button>
       </div>
     </div>
