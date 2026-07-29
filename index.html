@@ -425,6 +425,23 @@
   select.m-input{cursor:pointer;appearance:none;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A23C1E' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat:no-repeat;background-position:right 13px center;padding-right:34px}
+  textarea.m-input{display:block;resize:vertical;min-height:74px;line-height:1.5}
+  .m-hint{font-size:11px;color:var(--ink-soft);line-height:1.45;margin-top:5px}
+  /* pergunta do cartãozinho + interruptor */
+  .m-ask{display:flex;align-items:center;justify-content:space-between;gap:14px;
+    background:var(--peach);border-radius:var(--r-sm);padding:13px 15px;margin-top:16px}
+  .m-ask b{display:block;font-family:var(--serif);font-size:14.5px;font-weight:500;
+    color:var(--terra-ink);line-height:1.3}
+  .m-ask span{display:block;font-size:11.5px;color:var(--ink-soft);line-height:1.45;margin-top:3px}
+  .m-switch{position:relative;flex:0 0 auto;width:46px;height:26px;cursor:pointer}
+  .m-switch input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:2}
+  .m-switch i{position:absolute;inset:0;border-radius:999px;background:rgba(162,60,30,.24);
+    transition:background .25s ease,box-shadow .25s ease}
+  .m-switch i::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 3px rgba(74,22,7,.28);transition:transform .25s ease}
+  .m-switch input:checked + i{background:var(--terra)}
+  .m-switch input:checked + i::after{transform:translateX(20px)}
+  .m-switch input:focus-visible + i{box-shadow:0 0 0 3px rgba(162,60,30,.18)}
   .m-row{display:flex;gap:10px}
   .m-totals{background:var(--peach);border-radius:var(--r-sm);padding:15px 17px;margin-bottom:6px}
   .m-trow{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;color:var(--ink-soft);padding:4px 0}
@@ -1011,6 +1028,25 @@
 
         <label class="m-label" for="fNome">Seu nome</label>
         <input id="fNome" class="m-input" type="text" placeholder="Nome de quem faz o pedido">
+
+        <!-- pergunta do cartãozinho: vale para entrega e para retirada na loja -->
+        <div class="m-ask">
+          <div>
+            <b id="fMsgAskLabel">Quer dedicar uma mensagem a quem vai receber?</b>
+            <span>Escrevemos à mão no cartãozinho que acompanha as flores.</span>
+          </div>
+          <label class="m-switch">
+            <input type="checkbox" id="fMsgOn" aria-labelledby="fMsgAskLabel">
+            <i></i>
+          </label>
+        </div>
+
+        <div id="fMsgBox" hidden>
+          <label class="m-label" for="fMsg">Sua mensagem</label>
+          <textarea id="fMsg" class="m-input" rows="3" maxlength="200"
+                    placeholder="Ex.: Feliz aniversário, tia! Com carinho, Maria."></textarea>
+          <p class="m-hint"><span id="fMsgCount">0</span>/200 caracteres</p>
+        </div>
       </div>
 
       <div class="m-totals">
@@ -2303,13 +2339,35 @@ selRegiao.addEventListener('change', ()=>{
   if(campos) campos.style.display = retirada ? 'none' : '';
 });
 
+/* pergunta do cartãozinho: abre a caixa de texto só se o cliente quiser */
+document.getElementById('fMsgOn').addEventListener('change', function(){
+  const box = document.getElementById('fMsgBox');
+  box.hidden = !this.checked;
+  if(this.checked){
+    // o foco vai depois do clique, senão o próprio interruptor o retoma
+    setTimeout(()=>document.getElementById('fMsg').focus(), 0);
+  } else {
+    // desmarcou: descarta o que tinha sido escrito
+    document.getElementById('fMsg').value = '';
+    document.getElementById('fMsgCount').textContent = '0';
+  }
+});
+
+/* contador de caracteres do recado do cartão */
+document.getElementById('fMsg').addEventListener('input', function(){
+  document.getElementById('fMsgCount').textContent = this.value.length;
+});
+
 function abrirModal(nome, preco, waBase){
   pedidoAtual = {nome, preco, waBase};
   document.getElementById('modalTitle').textContent = nome;
   document.getElementById('modalPrice').textContent = preco>0 ? 'R$ '+brl(preco) : 'Valor a combinar';
   // limpa campos
   selRegiao.value = '';
-  ['fRua','fNum','fRef','fNome'].forEach(id=>document.getElementById(id).value='');
+  ['fRua','fNum','fRef','fNome','fMsg'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fMsgCount').textContent = '0';
+  document.getElementById('fMsgOn').checked = false;
+  document.getElementById('fMsgBox').hidden = true;
   document.getElementById('camposEndereco').style.display = '';
   document.getElementById('mpBox').classList.remove('show');
   document.getElementById('mpMsg').textContent = '';
@@ -2347,12 +2405,13 @@ function coletarEntrega(){
   const num = document.getElementById('fNum').value.trim();
   const ref = document.getElementById('fRef').value.trim();
   const nome = document.getElementById('fNome').value.trim();
+  const msgCartao = document.getElementById('fMsg').value.trim();
   if(!retirada){
     if(!rua){ alert('Por favor, informe a rua.'); document.getElementById('fRua').focus(); return null; }
     if(!num){ alert('Por favor, informe o número.'); document.getElementById('fNum').focus(); return null; }
   }
   const t = calcTotais();
-  return { regiao:f.r, frete:f.v, rua, num, ref, nome, total:t.total, retirada };
+  return { regiao:f.r, frete:f.v, rua, num, ref, nome, msgCartao, total:t.total, retirada };
 }
 
 function montarWhats(dados){
@@ -2367,6 +2426,7 @@ function montarWhats(dados){
   }
   msg += '\n';
   if(dados.nome) msg += `Cliente: ${dados.nome}\n`;
+  if(dados.msgCartao) msg += `\n💌 *Mensagem do cartão*\n"${dados.msgCartao}"\n`;
   msg += `\n🌸 Produto: ${pedidoAtual.preco>0?'R$ '+brl(pedidoAtual.preco):'a combinar'}`;
   msg += `\n🚚 Frete: ${dados.frete>0 ? 'R$ '+brl(dados.frete) : 'Retirada (grátis)'}`;
   msg += `\n💰 *Total: R$ ${brl(dados.total)}*`;

@@ -53,7 +53,8 @@ export default async function handler(req, res) {
         regiao: entrega.regiao,
         frete: entrega.frete,
         endereco: `${entrega.rua || ''}, ${entrega.num || ''} ${entrega.ref ? '- ' + entrega.ref : ''}`.trim(),
-        cliente: entrega.nome || ''
+        cliente: entrega.nome || '',
+        mensagem_cartao: String(entrega.msgCartao || '').slice(0, 200)
       } : { pedido: external_reference },
       back_urls: {
         success: `${volta}&status=ok`,
