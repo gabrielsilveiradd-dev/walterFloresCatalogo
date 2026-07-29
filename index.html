@@ -454,6 +454,62 @@
   #mpBox.show{display:block}
   #mpBox img{margin:0 auto;border-radius:12px;border:1px solid var(--line)}
 
+  /* ---------- Fluxo de pagamento (etapas dentro do modal) ---------- */
+  .fx-ref{
+    background:var(--peach);border-radius:var(--r-sm);padding:11px 15px;margin-bottom:14px;
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--terra-ink);
+    display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .fx-ref b{font-family:var(--serif);font-size:15px;letter-spacing:.04em;text-transform:none;color:var(--terra-deep)}
+  .fx-step{
+    border:1px solid var(--line);border-radius:var(--r-sm);padding:15px 16px;margin-bottom:10px;
+    transition:opacity .35s ease,border-color .35s ease}
+  .fx-step.done{opacity:.5}
+  .fx-step.done .fx-n{background:#25A65A}
+  .fx-step.ativo{border-color:var(--line-strong)}
+  .fx-head{display:flex;align-items:center;gap:10px}
+  .fx-head b{font-family:var(--serif);font-size:15.5px;font-weight:600;color:var(--terra-ink);line-height:1.25}
+  .fx-n{
+    flex:0 0 auto;width:23px;height:23px;border-radius:50%;background:var(--terra);color:#fff;
+    display:inline-flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;
+    transition:background .35s ease}
+  .fx-p{font-size:12.5px;color:var(--ink-soft);line-height:1.55;margin:9px 0 13px}
+  .fx-p:last-child{margin-bottom:0}
+  .fx-wait{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-soft);margin-top:10px}
+  .fx-spin{
+    flex:0 0 auto;width:16px;height:16px;border:2px solid var(--line-strong);border-top-color:var(--terra);
+    border-radius:50%;animation:fxspin .8s linear infinite}
+  @keyframes fxspin{to{transform:rotate(360deg)}}
+  .fx-ok b{display:block;font-family:var(--serif);font-size:17px;color:#1E8449;margin-bottom:4px}
+  .fx-wa-solid{background:#25A65A;color:#fff;border-color:#25A65A}
+  .fx-wa-solid:hover{background:#1E8449;border-color:#1E8449}
+  .fx-alerta{
+    background:#FDF3E3;border:1px solid #E8C89A;border-radius:var(--r-sm);
+    padding:12px 14px;font-size:12.5px;line-height:1.55;color:var(--terra-ink);margin-top:10px}
+  .fx-link{
+    display:block;text-align:center;margin-top:14px;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;font-weight:600;color:var(--ink-soft);cursor:pointer}
+  .fx-link:hover{color:var(--terra)}
+
+  /* ---------- Faixa "você tem um pedido aguardando pagamento" ---------- */
+  .retomar{
+    position:fixed;left:50%;transform:translateX(-50%) translateY(140%);bottom:16px;z-index:120;
+    width:min(560px,calc(100% - 24px));background:var(--terra-ink);color:#F7EDE3;
+    border-radius:var(--r-md);padding:13px 16px;display:flex;align-items:center;gap:13px;
+    box-shadow:0 14px 40px rgba(74,22,7,.32);transition:transform .45s cubic-bezier(.22,1,.36,1)}
+  .retomar.show{transform:translateX(-50%) translateY(0)}
+  .retomar p{flex:1;font-size:12.5px;line-height:1.45;margin:0}
+  .retomar p b{font-family:var(--serif);font-size:14px}
+  .retomar button{
+    flex:0 0 auto;background:var(--orange);color:#fff;border-radius:999px;padding:9px 16px;
+    font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:600;cursor:pointer}
+  .retomar button:hover{background:var(--orange-soft)}
+  .retomar .x{background:transparent;color:#F7EDE3;opacity:.6;padding:6px 4px;font-size:16px;letter-spacing:0}
+  .retomar .x:hover{background:transparent;opacity:1}
+  @media (max-width:560px){
+    .retomar{flex-wrap:wrap}
+    .retomar p{flex:1 0 100%}
+  }
+
   /* ====================== BUILDER ====================== */
   .builder{position:relative;background:var(--green);color:#F4F1E6;overflow:hidden;margin-top:clamp(20px,4vh,40px)}
   .builder::before{
@@ -929,6 +985,8 @@
         </div>
       </div>
 
+      <!-- ---------- ETAPA 1: dados do pedido ---------- -->
+      <div id="boxPedido">
       <div class="m-form">
         <label class="m-label" for="fRegiao">Região de entrega ou retirada</label>
         <select id="fRegiao" class="m-input">
@@ -969,8 +1027,63 @@
         <a class="m-wa" id="btnModalWa" href="#" target="_blank" rel="noopener"><svg><use href="#i-whats"/></svg> Prefiro combinar pelo WhatsApp</a>
       </div>
       <p class="m-note">Confirme os dados antes de pagar. A entrega é feita no endereço informado, dentro da nossa área de cobertura.</p>
+      </div><!-- /#boxPedido -->
+
+      <!-- ---------- ETAPAS 2 e 3: aviso à loja, pagamento e comprovante ---------- -->
+      <div id="boxFluxo" hidden>
+        <div class="fx-ref"><span>Nº do pedido</span><b id="fxRef">—</b></div>
+
+        <div class="fx-step ativo" id="fxStep1">
+          <div class="fx-head"><span class="fx-n">1</span><b>Avise a loja pelo WhatsApp</b></div>
+          <p class="fx-p">Envie a confirmação do pedido. O florista já fica sabendo o que preparar e que o pagamento está a caminho.</p>
+          <a class="m-wa fx-wa-solid" id="fxBtnWa" href="#" target="_blank" rel="noopener">
+            <svg><use href="#i-whats"/></svg> Enviar pedido no WhatsApp
+          </a>
+        </div>
+
+        <div class="fx-step" id="fxStep2">
+          <div class="fx-head"><span class="fx-n">2</span><b>Pague pelo Mercado Pago</b></div>
+          <p class="fx-p" id="fxTxt2">Gerando seu pagamento…</p>
+          <a class="m-pay" id="fxBtnPagar" href="#" target="_blank" rel="noopener" hidden>
+            <svg><use href="#i-bag"/></svg> <span id="fxValor">Pagar</span>
+          </a>
+        </div>
+
+        <div class="fx-step" id="fxStep3">
+          <div class="fx-head"><span class="fx-n">3</span><b>Envie o comprovante</b></div>
+          <div id="fxAguardando">
+            <p class="fx-p">Deixe esta página aberta: assim que o Mercado Pago confirmar o Pix, a instrução aparece aqui automaticamente.</p>
+            <div class="fx-wait"><span class="fx-spin"></span><span id="fxWaitTxt">Aguardando a confirmação do pagamento…</span></div>
+          </div>
+          <div id="fxAprovado" hidden>
+            <div class="fx-ok">
+              <b>Pagamento confirmado!</b>
+              <p class="fx-p" id="fxOkInfo"></p>
+            </div>
+            <a class="m-wa fx-wa-solid" id="fxBtnComprovante" href="#" target="_blank" rel="noopener">
+              <svg><use href="#i-whats"/></svg> Enviar comprovante no WhatsApp
+            </a>
+            <p class="m-note">Anexe o print do comprovante na conversa — assim a produção do seu pedido começa na hora.</p>
+          </div>
+          <div id="fxParou" hidden>
+            <div class="fx-alerta" id="fxParouTxt"></div>
+            <a class="m-wa fx-wa-solid" id="fxBtnAjuda" href="#" target="_blank" rel="noopener" style="margin-top:12px">
+              <svg><use href="#i-whats"/></svg> Falar com a loja no WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <span class="fx-link" id="fxVoltar">← Corrigir os dados do pedido</span>
+      </div>
     </div>
   </div>
+</div>
+
+<!-- ============ FAIXA: PEDIDO AGUARDANDO PAGAMENTO ============ -->
+<div class="retomar" id="retomarBar" hidden>
+  <p>Você tem um pedido <b id="retomarRef">—</b> aguardando pagamento.</p>
+  <button id="retomarBtn">Retomar pedido</button>
+  <button class="x" id="retomarX" aria-label="Dispensar">×</button>
 </div>
 
 <!-- ============ FOOTER ============ -->
@@ -2200,6 +2313,7 @@ function abrirModal(nome, preco, waBase){
   document.getElementById('camposEndereco').style.display = '';
   document.getElementById('mpBox').classList.remove('show');
   document.getElementById('mpMsg').textContent = '';
+  mostrarDados();            // volta para a tela de dados (etapa 1)
   calcTotais();
   modalBg.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -2207,6 +2321,17 @@ function abrirModal(nome, preco, waBase){
 function fecharModal(){
   modalBg.classList.remove('open');
   document.body.style.overflow = '';
+  // se fechou no meio da espera, para de consultar e oferece retomar depois
+  if(pollTimer){
+    pararPolling();
+    const p = lerPedido();
+    if(p){
+      const bar = el('retomarBar');
+      el('retomarRef').textContent = p.ref;
+      bar.hidden = false;
+      bar.classList.add('show');
+    }
+  }
 }
 document.getElementById('modalX').addEventListener('click', fecharModal);
 modalBg.addEventListener('click', e=>{ if(e.target===modalBg) fecharModal(); });
@@ -2271,48 +2396,264 @@ document.getElementById('btnModalWa').addEventListener('click', function(e){
   this.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(montarWhats(dados))}`;
 });
 
-/* Botão "Pagar com Mercado Pago" dentro do modal */
-document.getElementById('btnPay').addEventListener('click', async ()=>{
+/* ==========================================================
+   FLUXO DE PAGAMENTO — 3 etapas, sem banco de dados
+   ----------------------------------------------------------
+   1) Cliente confirma os dados e clica em "Pagar com Mercado Pago".
+   2) O site mostra a mensagem de PEDIDO AGUARDANDO PAGAMENTO para
+      enviar no WhatsApp da loja (avisa o comerciante) e o botão
+      de pagamento do Mercado Pago.
+   3) O site pergunta ao Mercado Pago, de 5 em 5 segundos, se o
+      pagamento caiu (/api/status-pagamento). Quando cai, a tela
+      troca sozinha e pede o comprovante pelo WhatsApp.
+
+   O nº do pedido fica no localStorage do navegador: é ele que faz
+   o papel do banco de dados. Se o cliente fechar tudo e pagar o Pix
+   depois pelo app do banco, ao voltar ao site aparece a faixa
+   "Retomar pedido" e a confirmação é detectada do mesmo jeito.
+   ========================================================== */
+
+const STATUS_ENDPOINT = '/api/status-pagamento';
+const LS_PEDIDO   = 'wf_pedido_pendente';
+const POLL_MS     = 5000;            // intervalo de consulta
+const POLL_LIMITE = 20 * 60 * 1000;  // desiste de esperar após 20 min
+const PEDIDO_TTL  = 24 * 60 * 60 * 1000; // pedido some do navegador após 24h
+
+const el = id => document.getElementById(id);
+const waLink = txt => `https://wa.me/${PHONE}?text=${encodeURIComponent(txt)}`;
+const METODOS = {pix:'Pix', credit_card:'cartão de crédito', debit_card:'cartão de débito', bolbradesco:'boleto', account_money:'saldo Mercado Pago'};
+
+let pollTimer = null, pollInicio = 0, pedidoEmCurso = null;
+
+/* ---------- nº do pedido: WF-20260728-A7K3 ---------- */
+function gerarRef(){
+  const d = new Date(), p = n => String(n).padStart(2,'0');
+  const sorteio = Math.random().toString(36).slice(2,6).toUpperCase();
+  return `WF-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${sorteio}`;
+}
+
+/* ---------- memória local do pedido ---------- */
+function salvarPedido(p){ try{ localStorage.setItem(LS_PEDIDO, JSON.stringify(p)); }catch(e){} }
+function lerPedido(){
+  try{
+    const p = JSON.parse(localStorage.getItem(LS_PEDIDO) || 'null');
+    if(!p || !p.ref) return null;
+    if(Date.now() - (p.ts||0) > PEDIDO_TTL){ limparPedido(); return null; }
+    return p;
+  }catch(e){ return null; }
+}
+function limparPedido(){ try{ localStorage.removeItem(LS_PEDIDO); }catch(e){} }
+
+/* ---------- as duas mensagens de WhatsApp ---------- */
+
+/* Enviada ANTES de pagar: confirma o pedido e avisa que o pagamento vem a seguir. */
+function msgAguardandoPagamento(p){
+  let m = `🌸 *PEDIDO REGISTRADO — AGUARDANDO PAGAMENTO*\n`;
+  m += `Nº do pedido: *${p.ref}*\n\n`;
+  m += p.corpo;
+  m += `\n\n⏳ *Ainda NÃO paguei.* Estou finalizando agora pelo Mercado Pago`;
+  m += ` e volto ao site para concluir.\n`;
+  m += `Assim que o pagamento for aprovado, envio o comprovante aqui nesta conversa.\n\n`;
+  m += `_Mensagem automática do site Walter & Flores. O pedido entra em produção após a confirmação do pagamento._`;
+  return m;
+}
+
+/* Enviada DEPOIS que o Mercado Pago confirma: pede o comprovante. */
+function msgComprovante(p, pg){
+  const valor = (pg && pg.valor != null) ? pg.valor : p.total;
+  let m = `✅ *PAGAMENTO APROVADO*\n`;
+  m += `Nº do pedido: *${p.ref}*\n`;
+  if(pg && pg.payment_id) m += `Mercado Pago ID: ${pg.payment_id}\n`;
+  m += `Valor pago: R$ ${brl(valor)}`;
+  if(pg && pg.metodo) m += ` (${METODOS[pg.metodo] || pg.metodo})`;
+  m += `\n\n${p.corpo}\n\n`;
+  m += `📎 Segue o comprovante em anexo.\nPode iniciar a produção do meu pedido! 🌸`;
+  return m;
+}
+
+/* Quando o site não conseguiu confirmar sozinho. */
+function msgAjuda(p){
+  return `Olá! Sobre o pedido *${p.ref}* (R$ ${brl(p.total)}):\n\n${p.corpo}\n\n`
+       + `Já fiz o pagamento pelo Mercado Pago, mas o site não confirmou automaticamente. `
+       + `Segue o comprovante em anexo 📎`;
+}
+
+/* ---------- troca entre a tela de dados e a tela do fluxo ---------- */
+function mostrarFluxo(p){
+  pedidoEmCurso = p;
+  el('boxPedido').hidden = true;
+  el('boxFluxo').hidden  = false;
+  el('fxRef').textContent = p.ref;
+  el('fxBtnWa').href = waLink(msgAguardandoPagamento(p));
+  el('fxBtnAjuda').href = waLink(msgAjuda(p));
+  el('fxValor').textContent = `Pagar R$ ${brl(p.total)}`;
+  // reset visual das etapas
+  el('fxStep1').className = 'fx-step ativo';
+  el('fxStep2').className = 'fx-step';
+  el('fxStep3').className = 'fx-step';
+  el('fxStep3').hidden = false;
+  el('fxBtnPagar').hidden = true;
+  el('fxAguardando').hidden = false;
+  el('fxAprovado').hidden = true;
+  el('fxParou').hidden = true;
+  el('fxWaitTxt').textContent = 'Aguardando a confirmação do pagamento…';
+}
+function mostrarDados(){
+  pararPolling();
+  el('boxFluxo').hidden  = true;
+  el('boxPedido').hidden = false;
+}
+el('fxVoltar').addEventListener('click', mostrarDados);
+
+/* marca a etapa como concluída quando o cliente usa o botão */
+el('fxBtnWa').addEventListener('click', ()=>{
+  el('fxStep1').className = 'fx-step done';
+  el('fxStep2').className = 'fx-step ativo';
+});
+el('fxBtnPagar').addEventListener('click', ()=>{
+  el('fxStep2').className = 'fx-step done';
+  el('fxStep3').className = 'fx-step ativo';
+});
+
+/* ---------- consulta o Mercado Pago até o pagamento cair ---------- */
+function pararPolling(){ if(pollTimer){ clearInterval(pollTimer); pollTimer = null; } }
+
+function iniciarPolling(ref){
+  pararPolling();
+  pollInicio = Date.now();
+  const consultar = async ()=>{
+    try{
+      const r = await fetch(`${STATUS_ENDPOINT}?ref=${encodeURIComponent(ref)}`, {cache:'no-store'});
+      const d = await r.json();
+      if(d.pago){ pararPolling(); mostrarAprovado(d); return; }
+      if(d.status === 'rejected' || d.status === 'cancelled'){
+        el('fxWaitTxt').textContent = 'O pagamento não foi aprovado. Você pode tentar de novo pelo botão acima.';
+      } else if(d.encontrado){
+        el('fxWaitTxt').textContent = 'Pagamento em processamento no Mercado Pago…';
+      }
+    }catch(e){ /* rede instável: tenta de novo no próximo ciclo */ }
+
+    if(Date.now() - pollInicio > POLL_LIMITE) desistirDeEsperar();
+  };
+  consultar();
+  pollTimer = setInterval(consultar, POLL_MS);
+}
+
+function mostrarAprovado(pg){
+  const p = pedidoEmCurso || lerPedido();
+  if(!p) return;
+  el('fxStep1').className = 'fx-step done';
+  el('fxStep2').className = 'fx-step done';
+  el('fxStep3').className = 'fx-step ativo';
+  el('fxAguardando').hidden = true;
+  el('fxParou').hidden = true;
+  el('fxAprovado').hidden = false;
+  const valor = (pg && pg.valor != null) ? pg.valor : p.total;
+  const metodo = pg && pg.metodo ? ` via ${METODOS[pg.metodo] || pg.metodo}` : '';
+  el('fxOkInfo').textContent = `Recebemos R$ ${brl(valor)}${metodo}. Agora envie o comprovante no WhatsApp para a loja iniciar a produção do pedido ${p.ref}.`;
+  el('fxBtnComprovante').href = waLink(msgComprovante(p, pg));
+  // pedido concluído: não precisa mais ficar guardado no navegador
+  el('fxBtnComprovante').addEventListener('click', limparPedido, {once:true});
+  esconderRetomar();
+}
+
+function desistirDeEsperar(){
+  pararPolling();
+  el('fxAguardando').hidden = true;
+  el('fxParou').hidden = false;
+  el('fxParouTxt').innerHTML = 'Não conseguimos confirmar o pagamento automaticamente. '
+    + 'Se você <b>já pagou</b>, é só enviar o comprovante pelo WhatsApp — a loja confirma manualmente. '
+    + 'Se ainda não pagou, reabra esta página pelo aviso de pedido pendente.';
+}
+
+/* ---------- Botão "Pagar com Mercado Pago" ---------- */
+el('btnPay').addEventListener('click', async ()=>{
   const dados = coletarEntrega();
   if(!dados) return;
-  const box = document.getElementById('mpBox');
-  const msg = document.getElementById('mpMsg');
-  box.classList.add('show');
 
-  // 1) Envia o pedido para o WhatsApp da loja (abre em nova aba)
-  const textoWhats = montarWhats(dados) + '\n\n_(Pedido enviado pelo site — pagamento via Mercado Pago)_';
-  window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(textoWhats)}`, '_blank');
+  const p = {
+    ref: gerarRef(),
+    nome: pedidoAtual.nome,
+    preco: pedidoAtual.preco,
+    waBase: pedidoAtual.waBase,
+    total: dados.total,
+    corpo: montarWhats(dados),
+    ts: Date.now()
+  };
+  salvarPedido(p);
+  mostrarFluxo(p);
 
-  // 2) Gera o pagamento
+  const txt2 = el('fxTxt2'), btnPagar = el('fxBtnPagar');
+
   if(!MP_ENDPOINT){
-    msg.innerHTML = `Seu pedido foi enviado pelo WhatsApp! 🌸<br>Total com entrega: <b>R$ ${brl(dados.total)}</b>.<br>O pagamento online está sendo configurado — combine o link pelo WhatsApp.`;
+    txt2.innerHTML = `O pagamento online ainda está sendo configurado. Combine o link de pagamento pelo WhatsApp — total do pedido: <b>R$ ${brl(p.total)}</b>.`;
     return;
   }
 
-  msg.textContent = 'Pedido enviado pelo WhatsApp! Gerando seu pagamento...';
+  txt2.textContent = 'Gerando seu pagamento…';
   try{
     const resp = await fetch(MP_ENDPOINT, {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        titulo: pedidoAtual.nome + ' + entrega ' + dados.regiao,
-        valor: dados.total,
-        entrega: dados
+        titulo: p.nome + ' + entrega ' + dados.regiao,
+        valor: p.total,
+        entrega: dados,
+        ref: p.ref
       })
     });
     const data = await resp.json();
-    let html = '<p class="m-note" style="margin-bottom:10px;color:var(--terra-deep)">✓ Pedido enviado pelo WhatsApp da loja!</p>';
-    if(data.qr_code_base64){
-      html += `<img src="data:image/png;base64,${data.qr_code_base64}" alt="QR Code" width="180" height="180">`;
-      html += `<p class="m-note" style="margin-top:10px">Escaneie para pagar R$ ${brl(dados.total)}</p>`;
-    }
-    if(data.init_point){
-      html += `<a class="m-pay" style="margin-top:12px;text-decoration:none" href="${data.init_point}" target="_blank" rel="noopener">Pagar R$ ${brl(dados.total)}</a>`;
-    }
-    msg.innerHTML = html;
+    if(!data.init_point) throw new Error(data.erro || 'sem link');
+
+    txt2.textContent = 'Pix, cartão ou boleto. O pagamento abre em outra aba — pode deixar esta aqui aberta.';
+    btnPagar.href = data.init_point;
+    btnPagar.hidden = false;
+    iniciarPolling(p.ref);
   }catch(err){
-    msg.innerHTML = 'Seu pedido foi enviado pelo WhatsApp! 🌸<br>Houve um erro ao gerar o pagamento online — combine o link diretamente pelo WhatsApp.';
+    txt2.innerHTML = 'Não foi possível gerar o pagamento online agora. '
+      + 'Envie o pedido pelo WhatsApp (etapa 1) que a loja manda o link de pagamento para você.';
+    el('fxStep3').hidden = true;
   }
 });
+
+/* ---------- retoma um pedido pendente ao abrir/voltar ao site ---------- */
+function esconderRetomar(){ el('retomarBar').classList.remove('show'); }
+
+function retomarPedido(p){
+  abrirModal(p.nome, p.preco, p.waBase || '');
+  mostrarFluxo(p);
+  el('fxTxt2').textContent = 'Se ainda não pagou, gere um novo pagamento voltando e confirmando os dados.';
+  el('fxStep1').className = 'fx-step done';
+  el('fxStep2').className = 'fx-step done';
+  el('fxStep3').className = 'fx-step ativo';
+  el('fxWaitTxt').textContent = 'Verificando o pagamento no Mercado Pago…';
+  esconderRetomar();
+  iniciarPolling(p.ref);
+}
+
+(function verificarPedidoPendente(){
+  const p = lerPedido();
+  if(!p) return;
+
+  const q = new URLSearchParams(location.search);
+  const voltouDoMP = q.has('status') || q.has('payment_id') || q.has('collection_status') || q.has('pedido');
+
+  // limpa os parâmetros do Mercado Pago da barra de endereço
+  if(voltouDoMP && history.replaceState) history.replaceState({}, '', location.pathname);
+
+  if(voltouDoMP){ retomarPedido(p); return; }
+
+  // não veio do checkout: oferece retomar discretamente
+  const bar = el('retomarBar');
+  el('retomarRef').textContent = p.ref;
+  bar.hidden = false;
+  setTimeout(()=>bar.classList.add('show'), 900);
+})();
+
+el('retomarBtn').addEventListener('click', ()=>{
+  const p = lerPedido();
+  if(p) retomarPedido(p); else esconderRetomar();
+});
+el('retomarX').addEventListener('click', esconderRetomar);
 
 /* ============ HEADER SHADOW ============ */
 const hdr = document.querySelector('header.site');
